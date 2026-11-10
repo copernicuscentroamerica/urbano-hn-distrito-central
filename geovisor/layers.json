@@ -1,0 +1,118 @@
+{
+  "schema_version": "1.0.0",
+  "project_id": "hn-distrito-central",
+  "title": "Distrito Central: brecha catastral y asentamientos informales",
+  "country": {
+    "code": "HN",
+    "name": "Honduras"
+  },
+  "map_view": {
+    "center": [
+      -87.20542,
+      14.085
+    ],
+    "zoom": 11.8,
+    "declared_centroid": [
+      -87.20542,
+      14.10253
+    ],
+    "is_referential": true,
+    "reference_note": "Encuadre referencial sobre Tegucigalpa y Comayagüela (Municipio del Distrito Central). Nota: el centroide 14.10253, -87.20542 y las 716,1 ha del formulario inicial pertenecen al antecedente del centro histórico; el ámbito vigente en S24 abarca toda la mancha urbana consolidada del MDC.",
+    "area_declared": "Por calcular sobre el polígono homologado de la mancha urbana consolidada del MDC (716,1 ha es solo antecedente preliminar).",
+    "scale_label": "Ciudad (mancha urbana consolidada), con agregación pública por colonia o celda de 250 m"
+  },
+  "geolibre_integration": {
+    "web_app_base_url": "https://web.geolibre.app/",
+    "project_file": "geovisor/proyecto.geolibre.json",
+    "embed_layout": "maponly",
+    "supports_local_geojson_preview": true
+  },
+  "planned_controls": [
+    "Selector de municipio para el kit replicable (inicialmente Distrito Central — MDC; segundos municipios solo con datos verificados).",
+    "Comparador temporal de huella construida (2016–2026) y año de aparición de edificaciones.",
+    "Vista pública agregada por colonia o malla de 250 m con filtro por tipología metodológica propuesta A–E.",
+    "Leyenda explícita que separa: (a) sin cobertura catastral disponible, (b) brecha física observada y (c) tipología preliminar sujeta a validación (nunca condición jurídica del predio)."
+  ],
+  "external_references": [
+    {
+      "label": "OpenEO — Copernicus Data Space Ecosystem",
+      "url": "https://openeo.dataspace.copernicus.eu/",
+      "kind": "documentacion_tecnica",
+      "note": "Entorno previsto en S24 junto con Google Earth Engine para el kit replicable municipal."
+    }
+  ],
+  "layers": [
+    {
+      "id": "hn-mdc-mancha-consolidada",
+      "title": "Perímetro de mancha urbana consolidada del MDC (GHSL / Dynamic World + AMDC)",
+      "group": "Ámbito urbano vigente",
+      "format": "geojson",
+      "geometry_type": "polygon",
+      "status": "en_preparacion",
+      "source_path": null,
+      "expected_file_hint": "geovisor/data/mdc_mancha_urbana.geojson",
+      "resolution": "10 m homologado con perímetro urbano AMDC",
+      "style": {
+        "fill_color": "#14283F",
+        "fill_opacity": 0.08,
+        "stroke_color": "#14283F",
+        "stroke_width": 2.2
+      },
+      "caveat": "Sustituye el polígono preliminar del centro histórico (716,1 ha)."
+    },
+    {
+      "id": "hn-mdc-huella-aparicion",
+      "title": "Ciudad construida y año estimado de aparición (2016–2026)",
+      "group": "Nivel 1: Datos globales",
+      "format": "xyz_or_cog",
+      "geometry_type": "raster",
+      "status": "en_preparacion",
+      "source_path": null,
+      "expected_file_hint": "geovisor/data/mdc_huella_multitemporal.geojson o Tile URL",
+      "resolution": "10 m (Sentinel-2 / Dynamic World / Open Buildings 2.5D)",
+      "style": {
+        "fill_color": "#007F8B",
+        "fill_opacity": 0.45,
+        "stroke_color": "#005a63",
+        "stroke_width": 1
+      },
+      "caveat": "Verificar cobertura temporal efectiva de Open Buildings 2.5D en el área."
+    },
+    {
+      "id": "hn-mdc-brecha-celdas-colonias",
+      "title": "Indicadores agregados de brecha catastral (colonia / celda 250 m)",
+      "group": "Nivel 3: Brecha agregada pública",
+      "format": "geojson",
+      "geometry_type": "polygon",
+      "status": "en_preparacion",
+      "source_path": null,
+      "expected_file_hint": "geovisor/data/mdc_brecha_agregada_250m.geojson",
+      "resolution": "Celdas de 250 m o colonias homologadas",
+      "style": {
+        "fill_color": "#e66101",
+        "fill_opacity": 0.5,
+        "stroke_color": "#b35806",
+        "stroke_width": 1
+      },
+      "caveat": "Protege la privacidad predial; la brecha física no constituye prueba de ilegalidad ni deuda tributaria."
+    },
+    {
+      "id": "hn-mdc-tipologias-ae",
+      "title": "Tipología metodológica preliminar A–E (brecha, morfología y pendiente)",
+      "group": "Nivel 4: Priorización municipal",
+      "format": "geojson",
+      "geometry_type": "polygon",
+      "status": "en_preparacion",
+      "source_path": null,
+      "expected_file_hint": "geovisor/data/mdc_tipologias_ae.geojson",
+      "resolution": "Agregación por colonia / sector",
+      "style": {
+        "fill_color": "#5e3c99",
+        "fill_opacity": 0.45,
+        "stroke_color": "#2d004b",
+        "stroke_width": 1.2
+      },
+      "caveat": "Clasificación técnica propuesta para priorizar levantamientos y mejoramiento barrial; sujeta a muestreo de campo."
+    }
+  ]
+}
