@@ -236,7 +236,7 @@ def render_upper_institutional_bar(
     right_context_html: str,
 ) -> str:
     """
-    Renderiza la barra superior de contexto sobre fondo azul oscuro (#0C1659).
+    Renderiza la barra superior de contexto sobre fondo azul oscuro (#1a1a1a).
     Los logotipos institucionales comunes y propios del proyecto se ubican en el
     bloque inferior de la página para mantener despejada la cabecera.
     """
@@ -279,9 +279,9 @@ def render_regional_institutional_band(
   <section class="{cls_attr}" aria-label="Banda institucional regional" style="background:#FFFFFF;border-top:3px solid #FFC800;border-bottom:1px solid #D5DDF0;padding:1.1rem 0;">
     <div class="container banda-regional-inner" style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1.25rem 2rem;">
       <div class="banda-regional-grupo" style="display:flex;flex-direction:column;gap:0.4rem;">
-        <span class="banda-regional-label" style="font-size:0.75rem;font-weight:700;color:#000A62;text-transform:uppercase;letter-spacing:0.03em;">Iniciativa Global Gateway · Unión Europea:</span>
+        <span class="banda-regional-label" style="font-size:0.75rem;font-weight:700;color:#111111;text-transform:uppercase;letter-spacing:0.03em;">Iniciativa Global Gateway · Unión Europea:</span>
         <div class="banda-regional-logos" style="display:flex;flex-wrap:wrap;align-items:center;gap:0.85rem;">
-          <span class="banda-regional-item logo-gg-pill" style="display:inline-flex;align-items:center;justify-content:center;background:#0C1659;padding:0.35rem 0.65rem;border-radius:6px;">
+          <span class="banda-regional-item logo-gg-pill" style="display:inline-flex;align-items:center;justify-content:center;background:#1a1a1a;padding:0.35rem 0.65rem;border-radius:6px;">
             <img src="{gg_src}" alt="Global Gateway" height="28" style="height:28px;width:auto;max-width:110px;object-fit:contain;display:block;" loading="lazy">
           </span>
           <span class="banda-regional-item logo-eu" style="display:inline-flex;align-items:center;justify-content:center;">
@@ -290,7 +290,7 @@ def render_regional_institutional_band(
         </div>
       </div>
       <div class="banda-regional-grupo" style="display:flex;flex-direction:column;gap:0.4rem;">
-        <span class="banda-regional-label" style="font-size:0.75rem;font-weight:700;color:#000A62;text-transform:uppercase;letter-spacing:0.03em;">Implementado por:</span>
+        <span class="banda-regional-label" style="font-size:0.75rem;font-weight:700;color:#111111;text-transform:uppercase;letter-spacing:0.03em;">Implementado por:</span>
         <div class="banda-regional-logos" style="display:flex;flex-wrap:wrap;align-items:center;gap:1.1rem;">
           <span class="banda-regional-item logo-ccvah" style="display:inline-flex;align-items:center;justify-content:center;">
             <img src="{ccvah_src}" alt="CCVAH — Consejo Centroamericano de Vivienda y Asentamientos Humanos" height="38" style="height:38px;width:auto;max-width:90px;object-fit:contain;display:block;" loading="lazy">
@@ -304,7 +304,7 @@ def render_regional_institutional_band(
         </div>
       </div>
       <div class="banda-regional-grupo" style="display:flex;flex-direction:column;gap:0.4rem;">
-        <span class="banda-regional-label" style="font-size:0.75rem;font-weight:700;color:#000A62;text-transform:uppercase;letter-spacing:0.03em;">Con el apoyo técnico de:</span>
+        <span class="banda-regional-label" style="font-size:0.75rem;font-weight:700;color:#111111;text-transform:uppercase;letter-spacing:0.03em;">Con el apoyo técnico de:</span>
         <div class="banda-regional-logos" style="display:flex;flex-wrap:wrap;align-items:center;gap:1.1rem;">
           <span class="banda-regional-item logo-cooperacion" style="display:inline-flex;align-items:center;justify-content:center;">
             <img src="{coop_src}" alt="Cooperación Alemana — Deutsche Zusammenarbeit" height="38" style="height:38px;width:auto;max-width:115px;object-fit:contain;display:block;" loading="lazy">
@@ -357,7 +357,7 @@ def render_project_institutions_band(
                   </div>
                   <div style="min-width:0;">
                     <span class="badge badge-lime" style="margin-bottom:0.2rem;font-size:0.7rem;">Marca de la iniciativa</span>
-                    <p class="inst-proyecto-name" style="margin:0;font-size:0.86rem;font-weight:700;color:#000A62;">{name_node}</p>
+                    <p class="inst-proyecto-name" style="margin:0;font-size:0.86rem;font-weight:700;color:#111111;">{name_node}</p>
                   </div>
                 </div>
                 """
@@ -399,7 +399,7 @@ def render_project_institutions_band(
             if url and str(url).startswith("https://")
             else nm
         )
-        acr_badge = f'<span class="inst-proyecto-acronym" style="display:inline-block;background:#000A62;color:#FFFFFF;font-size:0.7rem;font-weight:700;padding:0.1rem 0.45rem;border-radius:4px;">{esc(acr)}</span>' if acr else ""
+        acr_badge = f'<span class="inst-proyecto-acronym" style="display:inline-block;background:#111111;color:#FFFFFF;font-size:0.7rem;font-weight:700;padding:0.1rem 0.45rem;border-radius:4px;">{esc(acr)}</span>' if acr else ""
         role_html = f'<p class="inst-proyecto-role" style="margin:0.15rem 0 0;font-size:0.76rem;color:#3B4668;">{esc(role)}</p>' if role else ""
 
         if lpath:
@@ -414,7 +414,7 @@ def render_project_institutions_band(
                     <div class="inst-proyecto-text-head" style="margin-bottom:0.15rem;">
                       {acr_badge}
                     </div>
-                    <p class="inst-proyecto-name" style="margin:0;font-size:0.85rem;font-weight:700;color:#000A62;line-height:1.25;">{name_html}</p>
+                    <p class="inst-proyecto-name" style="margin:0;font-size:0.85rem;font-weight:700;color:#111111;line-height:1.25;">{name_html}</p>
                     {role_html}
                   </div>
                 </div>
@@ -423,13 +423,13 @@ def render_project_institutions_band(
         else:
             cards_html.append(
                 f"""
-                <div class="inst-proyecto-card is-text-only" style="display:flex;flex-direction:column;justify-content:center;padding:0.65rem 0.85rem;background:#F9FAFE;border:1px solid #D5DDF0;border-left:4px solid #000A62;border-radius:8px;">
+                <div class="inst-proyecto-card is-text-only" style="display:flex;flex-direction:column;justify-content:center;padding:0.65rem 0.85rem;background:#F9FAFE;border:1px solid #D5DDF0;border-left:4px solid #111111;border-radius:8px;">
                   <div class="inst-proyecto-text-head" style="display:flex;flex-wrap:wrap;align-items:center;gap:0.35rem;margin-bottom:0.2rem;">
                     {acr_badge}
                     <span class="inst-proyecto-no-logo-note" style="font-size:0.7rem;color:#52607A;background:#EEF2FA;padding:0.08rem 0.4rem;border-radius:4px;">Institución participante</span>
                   </div>
                   <div>
-                    <p class="inst-proyecto-name" style="margin:0;font-size:0.85rem;font-weight:700;color:#000A62;line-height:1.25;">{name_html}</p>
+                    <p class="inst-proyecto-name" style="margin:0;font-size:0.85rem;font-weight:700;color:#111111;line-height:1.25;">{name_html}</p>
                     {role_html}
                   </div>
                 </div>
@@ -444,11 +444,11 @@ def render_project_institutions_band(
         )
 
     return f"""
-    <section id="instituciones-participantes" class="banda-instituciones-proyecto" aria-label="Instituciones participantes del proyecto" style="background:#FFFFFF;border:1px solid #D5DDF0;border-top:3px solid #000A62;border-radius:10px;padding:1rem 1.15rem;margin:1.5rem 0 0.5rem;">
+    <section id="instituciones-participantes" class="banda-instituciones-proyecto" aria-label="Instituciones participantes del proyecto" style="background:#FFFFFF;border:1px solid #D5DDF0;border-top:3px solid #111111;border-radius:10px;padding:1rem 1.15rem;margin:1.5rem 0 0.5rem;">
       <div class="banda-proyecto-header" style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:0.65rem;margin-bottom:0.8rem;padding-bottom:0.55rem;border-bottom:1px solid #E4EAF7;">
         <div class="banda-proyecto-title-wrap" style="display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;">
           <span class="badge badge-country">Identidad local del proyecto</span>
-          <h2 class="banda-proyecto-title" style="margin:0;font-size:1.02rem;color:#000A62;">Instituciones participantes del proyecto</h2>
+          <h2 class="banda-proyecto-title" style="margin:0;font-size:1.02rem;color:#111111;">Instituciones participantes del proyecto</h2>
         </div>
         {action_link}
       </div>

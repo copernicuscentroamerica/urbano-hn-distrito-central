@@ -14,38 +14,38 @@
    ========================================================================== */
 
 :root {
-  --c-brand-blue: #000A62;
-  --c-cover-blue: #0C1659;
-  --c-mesh-blue: #172070;
+  --c-brand-blue: #111111;
+  --c-cover-blue: #181818;
+  --c-mesh-blue: #242424;
   --c-accent-yellow: #FFC800;
   --c-accent-yellow-hover: #FFD438;
   --c-accent-yellow-soft: #FFF8D6;
   --c-white: #FFFFFF;
 
   /* Alias semánticos compatibles con componentes del ecosistema */
-  --c-navy: #000A62;
-  --c-navy-mid: #0C1659;
-  --c-navy-soft: #172070;
-  --c-teal: #172070;
-  --c-teal-dark: #000A62;
-  --c-teal-light: #EEF1FA;
-  --c-bg: #F4F6FB;
+  --c-navy: #111111;
+  --c-navy-mid: #181818;
+  --c-navy-soft: #242424;
+  --c-teal: #1e1e1e;
+  --c-teal-dark: #111111;
+  --c-teal-light: #F4F4F6;
+  --c-bg: #F8F9FA;
   --c-surface: #FFFFFF;
-  --c-surface-alt: #EBEEF7;
+  --c-surface-alt: #F1F3F5;
   --c-lime: #FFC800;
   --c-lime-soft: #FFF8D6;
-  --c-text: #0F1738;
-  --c-text-muted: #455073;
-  --c-border: #D5DCEE;
-  --c-border-strong: #B0BBE0;
+  --c-text: #18181B;
+  --c-text-muted: #52525B;
+  --c-border: #E4E4E7;
+  --c-border-strong: #A1A1AA;
 
-  /* Estados semánticos independientes con contraste AA (separados de la marca) */
-  --c-decl-bg: #E6F2FA;
-  --c-decl-fg: #0B466E;
+  /* Estados semánticos independientes con contraste AA */
+  --c-decl-bg: #F4F4F5;
+  --c-decl-fg: #18181B;
   --c-prop-bg: #FFF6CC;
-  --c-prop-fg: #0C1659;
-  --c-pend-bg: #EFF2F7;
-  --c-pend-fg: #3E4C63;
+  --c-prop-fg: #111111;
+  --c-pend-bg: #F4F4F5;
+  --c-pend-fg: #3F3F46;
   --c-ok-bg: #E3F6EC;
   --c-ok-fg: #0D5933;
   --c-warn-bg: #FFF3DC;
@@ -422,7 +422,7 @@ main :focus-visible,
   overflow: hidden;
   background-color: var(--c-cover-blue);
   background-image:
-    linear-gradient(125deg, rgba(12, 22, 89, 0.93) 0%, rgba(0, 10, 98, 0.88) 54%, rgba(23, 32, 112, 0.90) 100%),
+    linear-gradient(125deg, rgba(20, 20, 20, 0.95) 0%, rgba(10, 10, 10, 0.92) 54%, rgba(28, 28, 28, 0.92) 100%),
     url("../img/brand/bg-trama-cartografica.png");
   background-size: cover;
   background-position: center;

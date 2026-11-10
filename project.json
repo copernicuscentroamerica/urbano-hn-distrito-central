@@ -23,8 +23,8 @@
   "institutional_use": {
     "problem": "La información catastral puede quedar rezagada respecto de edificaciones y ocupaciones existentes. La AMDC necesita medir esa diferencia de manera sistemática para orientar actualización, regularización y mejoramiento de barrios.",
     "institutions": [
-      "Universidad Nacional Autónoma de Honduras (UNAH)",
       "Alcaldía Municipal del Distrito Central (AMDC)",
+      "Universidad Nacional Autónoma de Honduras (UNAH)",
       "Secretaría de Gobernación, Justicia y Descentralización (SEGOB)"
     ],
     "primary_user": "AMDC: Dirección de Ordenamiento Territorial (responsable del Atlas Municipal), Catastro Municipal y la unidad de acceso a la tierra y regularización.\nInstituto de la Propiedad (regularización y titulación) y SEGOB (asistencia técnica a municipios).\nUNAH (Atlas Urbano).\nEtapa de réplica: toda la población, con énfasis en las personas y organizaciones interesadas en temas urbanos.",
@@ -195,7 +195,36 @@
       }
     ]
   },
-  "team": [],
+  "team": [
+    {
+      "name": "Mario Baide",
+      "role": "Profesor Investigador",
+      "institution": "Universidad Nacional Autónoma de Honduras (UNAH)",
+      "github_username": "mariobaidemunoz-del",
+      "profile_url": "https://github.com/mariobaidemunoz-del"
+    },
+    {
+      "name": "Mario Matamoros",
+      "role": "Profesor Investigador",
+      "institution": "Universidad Nacional Autónoma de Honduras (UNAH)",
+      "github_username": null,
+      "profile_url": null
+    },
+    {
+      "name": "Jonathan Ramirez",
+      "role": "Analista en Planificación Urbana",
+      "institution": "Alcaldía Municipal del Distrito Central (AMDC)",
+      "github_username": null,
+      "profile_url": null
+    },
+    {
+      "name": "Ana Martiza Irías",
+      "role": "Especialista institucional",
+      "institution": "Secretaría de Gobernación, Justicia y Descentralización (SEGOB)",
+      "github_username": null,
+      "profile_url": null
+    }
+  ],
   "data_sources": [
     {
       "title": "Sentinel-2 / óptico multiespectral (composites de estación seca, índices)",

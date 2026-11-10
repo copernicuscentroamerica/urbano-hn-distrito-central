@@ -525,6 +525,14 @@ def build_home_page(
 ) -> str:
     iu = manifest["institutional_use"]
     institutions_li = "".join(f"<li>{esc(inst)}</li>" for inst in iu.get("institutions", [])) or "<li>Institución por confirmar</li>"
+    team_members = manifest.get("team", [])
+    team_li = "".join(
+        f"<li><strong>{esc(m['name'])}</strong>"
+        + (f" · {esc(m['institution'])}" if m.get("institution") else "")
+        + (f" <small style='color:var(--c-text-muted);'>({esc(m['role'])})</small>" if m.get("role") else "")
+        + "</li>"
+        for m in team_members
+    ) if team_members else "<li>Integrantes por confirmar</li>"
     limitations_li = "".join(f"<li>{esc(lim)}</li>" for lim in manifest.get("limitations", [])[:5])
     tags_spans = "".join(f'<span class="tag">{esc(t)}</span>' for t in manifest.get("tags", []))
 
@@ -623,6 +631,15 @@ def build_home_page(
           <p>{esc(iu.get('decision_supported'), 'No indicado en el perfil')}</p>
           <p><strong>Beneficio esperado:</strong> {esc(iu.get('expected_benefit'), 'No indicado en el perfil')}</p>
         </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="card" style="border-left:4px solid var(--c-accent-yellow);">
+        <span class="badge badge-ok">Equipo técnico</span>
+        <h3 style="margin:0.4rem 0 0.5rem;font-size:1.15rem;">Integrantes de la iniciativa</h3>
+        <p style="margin:0 0 0.75rem;color:var(--c-text-muted);">Equipo de trabajo conformado por representantes de las instituciones participantes (AMDC, UNAH y SEGOB):</p>
+        <ul style="margin:0;padding-left:1.25rem;line-height:1.75;">{team_li}</ul>
       </div>
     </section>
 
@@ -749,6 +766,7 @@ def build_proyecto_page(
         <div class="grid-3">
           <div>
             <p><strong>Instituciones participantes:</strong><br>{esc(", ".join(manifest["institutional_use"].get("institutions", [])), "Por confirmar")}</p>
+            <p><strong>Integrantes del equipo:</strong><br>{esc(", ".join(m['name'] for m in manifest.get('team', [])) or 'Por confirmar')}</p>
             <p><strong>Responsabilidad funcional:</strong><br>Equipo técnico de la iniciativa ({esc(manifest['country']['name'])}) · Coordinación regional del Clúster Urbano.</p>
           </div>
           <div>
