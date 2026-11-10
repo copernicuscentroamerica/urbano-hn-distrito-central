@@ -19,7 +19,7 @@ Contar con indicadores trazables y un kit replicable que conecte el trabajo muni
 - **Mario Baide** · Profesor Investigador, UNAH
 - **Mario Matamoros** · Profesor Investigador, UNAH
 - **Jonathan Ramirez** · Analista en Planificación Urbana, AMDC
-- **Ana Martiza Irías** · SEGOB
+- **Ana Maritza Irías** · SEGOB
 
 ## Territorio
 
