@@ -1,0 +1,211 @@
+{
+  "type": "FeatureCollection",
+  "name": "mdc_tipologias_ae",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "sector_nombre": "Nueva Capital / Mary Flake de Flores",
+        "sector_zona": "Noroccidente",
+        "tipologia": "E · Brecha en condición crítica",
+        "edificaciones_total": 1420,
+        "porcentaje_fuera_catastro": "82%",
+        "porcentaje_edif_nueva": "57%",
+        "pendiente_media": "38.5%",
+        "nivel_amenaza": "Muy Alta (Laderas y Quebradas)",
+        "color_hex": "#67001f"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -87.255,
+              14.145
+            ],
+            [
+              -87.235,
+              14.152
+            ],
+            [
+              -87.228,
+              14.138
+            ],
+            [
+              -87.248,
+              14.13
+            ],
+            [
+              -87.255,
+              14.145
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "sector_nombre": "Los Pinos / Villa Nueva",
+        "sector_zona": "Oriente",
+        "tipologia": "D · Ocupación reciente sin catastro",
+        "edificaciones_total": 980,
+        "porcentaje_fuera_catastro": "68%",
+        "porcentaje_edif_nueva": "62%",
+        "pendiente_media": "26.0%",
+        "nivel_amenaza": "Moderada",
+        "color_hex": "#d73027"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -87.175,
+              14.075
+            ],
+            [
+              -87.155,
+              14.085
+            ],
+            [
+              -87.162,
+              14.065
+            ],
+            [
+              -87.18,
+              14.058
+            ],
+            [
+              -87.175,
+              14.075
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "sector_nombre": "Flor del Campo / Las Torres",
+        "sector_zona": "Suroccidente",
+        "tipologia": "C · Informal consolidado sin catastro",
+        "edificaciones_total": 2150,
+        "porcentaje_fuera_catastro": "54%",
+        "porcentaje_edif_nueva": "28%",
+        "pendiente_media": "18.5%",
+        "nivel_amenaza": "Media",
+        "color_hex": "#f46d43"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -87.24,
+              14.07
+            ],
+            [
+              -87.22,
+              14.075
+            ],
+            [
+              -87.215,
+              14.055
+            ],
+            [
+              -87.235,
+              14.05
+            ],
+            [
+              -87.24,
+              14.07
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "sector_nombre": "Colonia Kennedy / Hato de Enmedio",
+        "sector_zona": "Suroriente",
+        "tipologia": "B · Catastrado con brecha",
+        "edificaciones_total": 3400,
+        "porcentaje_fuera_catastro": "22%",
+        "porcentaje_edif_nueva": "15%",
+        "pendiente_media": "8.0%",
+        "nivel_amenaza": "Baja",
+        "color_hex": "#fdae61"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -87.195,
+              14.065
+            ],
+            [
+              -87.175,
+              14.068
+            ],
+            [
+              -87.18,
+              14.05
+            ],
+            [
+              -87.2,
+              14.048
+            ],
+            [
+              -87.195,
+              14.065
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "sector_nombre": "Centro Histórico / El Picacho / La Ronda",
+        "sector_zona": "Centro",
+        "tipologia": "A · Formal consolidado",
+        "edificaciones_total": 1850,
+        "porcentaje_fuera_catastro": "4%",
+        "porcentaje_edif_nueva": "3%",
+        "pendiente_media": "12.0%",
+        "nivel_amenaza": "Baja",
+        "color_hex": "#d9d9d9"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -87.215,
+              14.108
+            ],
+            [
+              -87.195,
+              14.11
+            ],
+            [
+              -87.198,
+              14.095
+            ],
+            [
+              -87.218,
+              14.093
+            ],
+            [
+              -87.215,
+              14.108
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

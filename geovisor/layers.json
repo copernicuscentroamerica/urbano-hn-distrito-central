@@ -66,15 +66,15 @@
       "group": "Ámbito urbano vigente",
       "format": "geojson",
       "geometry_type": "polygon",
-      "status": "en_preparacion",
-      "source_path": null,
+      "status": "publicado",
+      "source_path": "geovisor/capas/mdc_mancha_urbana.geojson",
       "expected_file_hint": "geovisor/capas/mdc_mancha_urbana.geojson",
       "resolution": "10 m homologado con perímetro urbano AMDC",
       "style": {
-        "fill_color": "#14283F",
-        "fill_opacity": 0.08,
-        "stroke_color": "#14283F",
-        "stroke_width": 2.2
+        "fill_color": "#FFC800",
+        "fill_opacity": 0.12,
+        "stroke_color": "#FFC800",
+        "stroke_width": 2.5
       },
       "caveat": "Sustituye el polígono preliminar del centro histórico (716,1 ha)."
     },
@@ -102,15 +102,15 @@
       "group": "Nivel 3: Brecha agregada pública",
       "format": "geojson",
       "geometry_type": "polygon",
-      "status": "en_preparacion",
-      "source_path": null,
+      "status": "publicado",
+      "source_path": "geovisor/capas/mdc_brecha_agregada_250m.geojson",
       "expected_file_hint": "geovisor/capas/mdc_brecha_agregada_250m.geojson",
       "resolution": "Celdas de 250 m o colonias homologadas",
       "style": {
-        "fill_color": "#e66101",
-        "fill_opacity": 0.5,
+        "fill_color": "#f46d43",
+        "fill_opacity": 0.4,
         "stroke_color": "#b35806",
-        "stroke_width": 1
+        "stroke_width": 1.0
       },
       "caveat": "Protege la privacidad predial; la brecha física no constituye prueba de ilegalidad ni deuda tributaria."
     },
@@ -120,15 +120,15 @@
       "group": "Nivel 4: Priorización municipal",
       "format": "geojson",
       "geometry_type": "polygon",
-      "status": "en_preparacion",
-      "source_path": null,
+      "status": "publicado",
+      "source_path": "geovisor/capas/mdc_tipologias_ae.geojson",
       "expected_file_hint": "geovisor/capas/mdc_tipologias_ae.geojson",
       "resolution": "Agregación por colonia / sector",
       "style": {
-        "fill_color": "#5e3c99",
-        "fill_opacity": 0.45,
-        "stroke_color": "#2d004b",
-        "stroke_width": 1.2
+        "fill_color": "#d73027",
+        "fill_opacity": 0.55,
+        "stroke_color": "#67001f",
+        "stroke_width": 1.5
       },
       "caveat": "Clasificación técnica propuesta para priorizar levantamientos y mejoramiento barrial; sujeta a muestreo de campo."
     }

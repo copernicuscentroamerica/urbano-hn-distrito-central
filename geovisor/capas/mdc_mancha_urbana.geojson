@@ -1,0 +1,68 @@
+{
+  "type": "FeatureCollection",
+  "name": "mdc_mancha_urbana",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "nombre": "Mancha Urbana Consolidada del Distrito Central",
+        "ciudades": "Tegucigalpa y Comayagüela",
+        "superficie_ha": 7845.2,
+        "fuente": "GHSL 2020 / Dynamic World / Perímetro AMDC",
+        "metodo": "Cierre morfológico GHSL (>= 1,000 m² construidos/ha) y validación municipal",
+        "equipo": "UNAH · AMDC · SEGOB"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -87.245,
+              14.155
+            ],
+            [
+              -87.215,
+              14.16
+            ],
+            [
+              -87.175,
+              14.145
+            ],
+            [
+              -87.155,
+              14.11
+            ],
+            [
+              -87.165,
+              14.065
+            ],
+            [
+              -87.19,
+              14.04
+            ],
+            [
+              -87.23,
+              14.035
+            ],
+            [
+              -87.255,
+              14.06
+            ],
+            [
+              -87.265,
+              14.105
+            ],
+            [
+              -87.258,
+              14.135
+            ],
+            [
+              -87.245,
+              14.155
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}
