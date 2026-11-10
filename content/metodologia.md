@@ -168,6 +168,12 @@ Visualización en dashboard, visor o app
 
 6. Publicación y réplica. Capas y tablero en el Atlas Municipal y el Atlas Urbano UNAH; scripts y guía en un repositorio abierto; réplica en un segundo municipio.
 
+**Precisiones metodológicas para el cruce espacial.** Se establecen los siguientes criterios técnicos para asegurar la robustez del análisis entre la ciudad construida y el parcelario:
+
+- *Tolerancia posicional:* Se define un búfer de tolerancia de 3 a 5 metros alrededor del centroide de cada edificación para absorber desplazamientos cartográficos menores entre las imágenes satelitales (Open Buildings / Sentinel) y el parcelario vectorial de la AMDC.
+- *Diferenciación de vacíos:* Se distingue explícitamente entre edificaciones localizadas en sectores sin cobertura catastral digital (vacío de información) y edificaciones ubicadas dentro de predios catastrados pero no registradas (rezago o brecha catastral efectiva).
+- *Filtrado multitemporal:* Para mitigar falsos positivos producidos por suelos desnudos estacionales o variabilidad fenológica, la huella construida se valida contra la serie temporal Sentinel-2 y el índice de persistencia de Dynamic World.
+
 **Índices, algoritmos o herramientas.** NDBI, NDVI, BSI; probabilidad de construido (Dynamic World); presencia y altura de edificaciones (Open Buildings 2.5D); pendiente (Copernicus DEM); densidad de edificaciones por hectárea, tamaño medio de edificación y proporción fuera de catastro.
 
 Herramientas: Google Earth Engine (JavaScript), openEO en Copernicus Data Space Ecosystem (Python), QGIS / ArcGIS Pro, PostGIS y GeoServer.

@@ -1543,3 +1543,416 @@ tr:last-child td {
 .hidden {
   display: none !important;
 }
+
+/* ==========================================================================
+   Estética Forense Dark Minimalista (Forensic Architecture Style)
+   Atmósfera oscura de investigación técnica con matices vagos e intermitentes de luz
+   ========================================================================== */
+
+@keyframes light-intermittent-amber {
+  0%, 100% {
+    opacity: 0.12;
+    filter: blur(75px);
+    transform: translate(0, 0) scale(1);
+  }
+  30% {
+    opacity: 0.32;
+    filter: blur(95px);
+    transform: translate(-30px, 20px) scale(1.12);
+  }
+  55% {
+    opacity: 0.08;
+    filter: blur(65px);
+    transform: translate(15px, -10px) scale(0.95);
+  }
+  80% {
+    opacity: 0.38;
+    filter: blur(110px);
+    transform: translate(25px, -25px) scale(1.18);
+  }
+}
+
+@keyframes light-intermittent-cyan {
+  0%, 100% {
+    opacity: 0.06;
+    filter: blur(80px);
+    transform: scale(1);
+  }
+  40% {
+    opacity: 0.22;
+    filter: blur(105px);
+    transform: scale(1.2) translate(-15px, -15px);
+  }
+  65% {
+    opacity: 0.04;
+    filter: blur(70px);
+  }
+  85% {
+    opacity: 0.28;
+    filter: blur(100px);
+    transform: scale(1.1) translate(20px, 15px);
+  }
+}
+
+@keyframes pulse-beacon {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 200, 0, 0.85);
+  }
+  70% {
+    box-shadow: 0 0 0 7px rgba(255, 200, 0, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 200, 0, 0);
+  }
+}
+
+@keyframes radar-scan {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+html, body {
+  background-color: #030305 !important;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px) !important;
+  background-size: 38px 38px !important;
+  color: #E2E8F0 !important;
+}
+
+:root {
+  --c-bg: #030305 !important;
+  --c-surface: #07070a !important;
+  --c-surface-alt: #0e0e14 !important;
+  --c-text: #F1F5F9 !important;
+  --c-text-muted: #8E98A8 !important;
+  --c-border: #181A22 !important;
+  --c-border-strong: #2A2E3D !important;
+  --c-brand-blue: #FFC800 !important;
+  --c-cover-blue: #030305 !important;
+  --c-mesh-blue: #0d0d12 !important;
+}
+
+/* Cabecera forense minimalista */
+.site-header {
+  background: rgba(3, 3, 6, 0.94) !important;
+  backdrop-filter: blur(16px) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.95) !important;
+}
+
+.brand-mark {
+  border-radius: 2px !important;
+  font-family: var(--font-mono), monospace !important;
+  background: #FFC800 !important;
+  color: #030305 !important;
+}
+
+.brand-title {
+  color: #FFFFFF !important;
+  letter-spacing: -0.01em;
+}
+
+.brand-subtitle {
+  color: #FFC800 !important;
+  font-family: var(--font-mono), monospace !important;
+  font-size: 0.72rem !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+  font-weight: 600 !important;
+}
+
+.brand-team {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.76rem;
+  color: #CBD5E1;
+  margin-top: 4px;
+  font-family: var(--font-mono), monospace;
+  letter-spacing: 0.02em;
+}
+
+.brand-team::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: #FFC800;
+  border-radius: 50%;
+  animation: pulse-beacon 2.4s infinite cubic-bezier(0.4, 0, 0.6, 1);
+  flex-shrink: 0;
+}
+
+.brand-team strong {
+  color: #FFC800;
+  font-weight: 700;
+}
+
+/* Hero con iluminación ambiental intermitente */
+.hero {
+  position: relative !important;
+  background-color: #020204 !important;
+  background-image:
+    radial-gradient(circle at 50% 15%, rgba(15, 18, 25, 0.9) 0%, #020204 75%) !important;
+  color: #FFFFFF !important;
+  border-bottom: 1px solid rgba(255, 200, 0, 0.5) !important;
+  overflow: hidden !important;
+  padding: 3.2rem 0 3rem !important;
+}
+
+.hero::before {
+  content: "" !important;
+  position: absolute !important;
+  top: -25% !important;
+  right: 8% !important;
+  width: 520px !important;
+  height: 420px !important;
+  border-radius: 50% !important;
+  background: radial-gradient(circle, rgba(255, 200, 0, 0.22) 0%, rgba(255, 150, 0, 0.06) 45%, transparent 70%) !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+  animation: light-intermittent-amber 13s infinite ease-in-out !important;
+}
+
+.hero::after {
+  content: "" !important;
+  position: absolute !important;
+  bottom: -20% !important;
+  left: 6% !important;
+  width: 480px !important;
+  height: 360px !important;
+  border-radius: 50% !important;
+  background: radial-gradient(circle, rgba(70, 165, 255, 0.18) 0%, rgba(0, 90, 220, 0.05) 50%, transparent 75%) !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+  animation: light-intermittent-cyan 17s infinite ease-in-out !important;
+}
+
+.hero > .container {
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+.hero h1, h1, h2, h3, h4 {
+  color: #FFFFFF !important;
+  letter-spacing: -0.02em;
+}
+
+.hero-lead {
+  color: #CBD5E1 !important;
+  max-width: 880px;
+}
+
+/* Ficha de integrantes con estética de monitoreo / arquitectura forense */
+.hero-team-box {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.75rem !important;
+  background: rgba(8, 10, 15, 0.85) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-left: 3px solid #FFC800 !important;
+  border-radius: 2px !important;
+  padding: 0.75rem 1.25rem !important;
+  margin: 1.2rem 0 !important;
+  font-family: var(--font-mono), monospace !important;
+  font-size: 0.88rem !important;
+  letter-spacing: 0.02em !important;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.9), 0 0 25px rgba(255, 200, 0, 0.08) !important;
+  position: relative !important;
+  overflow: hidden !important;
+  backdrop-filter: blur(12px) !important;
+}
+
+.hero-team-box::after {
+  content: "" !important;
+  position: absolute !important;
+  top: 0 !important; left: 0 !important; width: 100% !important; height: 100% !important;
+  background: linear-gradient(90deg, transparent, rgba(255, 200, 0, 0.08), transparent) !important;
+  animation: radar-scan 6s infinite linear !important;
+  pointer-events: none !important;
+}
+
+.hero-team-box strong {
+  color: #FFC800 !important;
+  text-transform: uppercase !important;
+  font-size: 0.78rem !important;
+  letter-spacing: 0.08em !important;
+}
+
+/* Tarjetas y módulos analíticos */
+.card {
+  background: #06070a !important;
+  border: 1px solid rgba(255, 255, 255, 0.07) !important;
+  border-radius: 3px !important;
+  color: #E2E8F0 !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8) !important;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease !important;
+  position: relative !important;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 200, 0, 0.25), transparent);
+}
+
+.card:hover {
+  border-color: rgba(255, 200, 0, 0.45) !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.95), 0 0 25px rgba(255, 200, 0, 0.1) !important;
+  transform: translateY(-2px) !important;
+}
+
+.card h3 {
+  color: #FFFFFF !important;
+}
+
+.card p {
+  color: #8E98A8 !important;
+}
+
+/* Tiras de estado métricas */
+.status-strip {
+  background: #040508 !important;
+  border: 1px solid rgba(255, 255, 255, 0.07) !important;
+  border-radius: 3px !important;
+}
+
+.status-cell {
+  background: #090a0f !important;
+  border-left: 2px solid #FFC800 !important;
+  border-radius: 2px !important;
+}
+
+.status-cell-label {
+  font-family: var(--font-mono), monospace !important;
+  font-size: 0.72rem !important;
+  letter-spacing: 0.08em !important;
+  color: #7E899C !important;
+}
+
+/* Bandas institucionales */
+.banda-institucional-regional {
+  background: #030305 !important;
+  border-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+.banda-regional-label {
+  color: #FFC800 !important;
+  font-family: var(--font-mono), monospace !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+}
+
+.banda-regional-item {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-radius: 2px !important;
+}
+
+.banda-instituciones-proyecto {
+  background: #06070a !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-top: 3px solid #FFC800 !important;
+  border-radius: 3px !important;
+}
+
+.banda-proyecto-title {
+  color: #FFFFFF !important;
+}
+
+.card-inst-strip {
+  background: #0a0b10 !important;
+  border: 1px solid rgba(255, 255, 255, 0.07) !important;
+  border-radius: 2px !important;
+}
+
+.card-inst-strip-text strong {
+  color: #FFFFFF !important;
+}
+
+.callout {
+  background: #0a0b10 !important;
+  color: #E2E8F0 !important;
+  border-left: 3px solid #FFC800 !important;
+  border-radius: 2px !important;
+}
+
+.callout strong {
+  color: #FFC800 !important;
+}
+
+.table-wrap {
+  background: #050609 !important;
+  border-color: rgba(255, 255, 255, 0.07) !important;
+}
+
+th {
+  background: #0d0e14 !important;
+  color: #FFC800 !important;
+  border-color: rgba(255, 255, 255, 0.07) !important;
+  font-family: var(--font-mono), monospace !important;
+  letter-spacing: 0.04em !important;
+  font-size: 0.82rem !important;
+}
+
+td {
+  border-color: rgba(255, 255, 255, 0.05) !important;
+  color: #CBD5E1 !important;
+}
+
+.site-footer {
+  background: #020204 !important;
+  border-top: 1px solid rgba(255, 200, 0, 0.4) !important;
+  color: #7E899C !important;
+}
+
+.site-footer a {
+  color: #FFC800 !important;
+}
+
+.geovisor-shell {
+  background: #050609 !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  border-radius: 3px !important;
+}
+
+.geovisor-sidebar {
+  background: #08090d !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.site-nav a {
+  color: #B4BFD0 !important;
+  font-family: var(--font-mono), monospace !important;
+  font-size: 0.82rem !important;
+  letter-spacing: 0.04em !important;
+}
+
+.site-nav a:hover, .site-nav a[aria-current="page"] {
+  background: rgba(255, 200, 0, 0.12) !important;
+  color: #FFC800 !important;
+  box-shadow: 0 0 14px rgba(255, 200, 0, 0.22) !important;
+}
+
+.badge-country {
+  background: #0d0f17 !important;
+  color: #8E98A8 !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+.prose code {
+  background: #0d0f17 !important;
+  color: #FFC800 !important;
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+
+.tag {
+  background: #0d0f17 !important;
+  color: #FFC800 !important;
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+}

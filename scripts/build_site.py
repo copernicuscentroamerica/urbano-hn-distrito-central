@@ -188,6 +188,7 @@ def render_shell(
         <span class="brand-text">
           <span class="brand-title">{esc(short_title)}</span>
           <span class="brand-subtitle">Clúster de Asentamientos Humanos · Fase II</span>
+          <span class="brand-team"><strong>Integrantes:</strong> Maritza Irias, Jonathán Rámirez, Mario Baide y Mario Matamoros</span>
         </span>
       </a>
       <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="menu-proyecto">
@@ -554,6 +555,9 @@ def build_home_page(
           {badge_html(manifest['pmv']['scope_status'], 'Alcance PMV')}
         </div>
         <h1>{esc(manifest['title'])}</h1>
+        <div class="hero-team-box">
+          <strong>Integrantes del grupo:</strong> Maritza Irias, Jonathán Rámirez, Mario Baide y Mario Matamoros
+        </div>
         <p class="hero-lead">{esc(manifest['summary'])}</p>
         <div class="hero-actions">
           <a class="btn btn-primary" href="{html.escape(ctx.site_url('aplicacion/'), quote=True)}">Abrir Geovisor (GeoLibre)</a>
@@ -1608,7 +1612,8 @@ def build_404_page(ctx: SiteContext, manifest: dict[str, Any], repo_cfg: dict[st
 
 def write_deterministic(path: Path, text: str) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(text, encoding="utf-8", newline="\n")
+    with path.open("w", encoding="utf-8", newline="\n") as f:
+        f.write(text)
 
 
 def main() -> int:
