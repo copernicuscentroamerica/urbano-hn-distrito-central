@@ -68,7 +68,7 @@
       "geometry_type": "polygon",
       "status": "en_preparacion",
       "source_path": null,
-      "expected_file_hint": "geovisor/data/mdc_mancha_urbana.geojson",
+      "expected_file_hint": "geovisor/capas/mdc_mancha_urbana.geojson",
       "resolution": "10 m homologado con perímetro urbano AMDC",
       "style": {
         "fill_color": "#14283F",
@@ -86,7 +86,7 @@
       "geometry_type": "raster",
       "status": "en_preparacion",
       "source_path": null,
-      "expected_file_hint": "geovisor/data/mdc_huella_multitemporal.geojson o Tile URL",
+      "expected_file_hint": "geovisor/capas/mdc_huella_multitemporal.geojson o Tile URL",
       "resolution": "10 m (Sentinel-2 / Dynamic World / Open Buildings 2.5D)",
       "style": {
         "fill_color": "#007F8B",
@@ -104,7 +104,7 @@
       "geometry_type": "polygon",
       "status": "en_preparacion",
       "source_path": null,
-      "expected_file_hint": "geovisor/data/mdc_brecha_agregada_250m.geojson",
+      "expected_file_hint": "geovisor/capas/mdc_brecha_agregada_250m.geojson",
       "resolution": "Celdas de 250 m o colonias homologadas",
       "style": {
         "fill_color": "#e66101",
@@ -122,7 +122,7 @@
       "geometry_type": "polygon",
       "status": "en_preparacion",
       "source_path": null,
-      "expected_file_hint": "geovisor/data/mdc_tipologias_ae.geojson",
+      "expected_file_hint": "geovisor/capas/mdc_tipologias_ae.geojson",
       "resolution": "Agregación por colonia / sector",
       "style": {
         "fill_color": "#5e3c99",

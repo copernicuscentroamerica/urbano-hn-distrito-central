@@ -56,12 +56,10 @@ Existe un perfil de proyecto y los materiales enumerados en la sección de docum
 
 ## Participación
 
-La colaboración de esta iniciativa se organizará en un repositorio canónico. Las contribuciones se preparan en una rama del clon personal o del fork y se presentan mediante una solicitud de cambios. Los enlaces de colaboración se activarán cuando el repositorio esté configurado y verificado.
+El repositorio oficial de esta iniciativa se encuentra activo y abierto a la colaboración técnica. Las personas e instituciones participantes trabajan sobre una copia personal (*fork*) vinculada en Google Antigravity, integran capas geoespaciales en `geovisor/capas/` o ejecutan el ejercicio práctico en Google Colab / Google Earth Engine, y envían sus mejoras mediante una solicitud de cambios (*Pull Request*) para revisión técnica antes de su publicación.
 
 ## Precedencia documental e identificación
 
-**Título del perfil que orienta esta configuración:** Brecha catastral y asentamientos informales en el Municipio del Distrito Central: herramienta geoespacial replicable para los municipios de Honduras (`S24`).
+**Perfil documental que orienta esta iniciativa:** *Brecha catastral y asentamientos informales en el Municipio del Distrito Central: herramienta geoespacial replicable para los municipios de Honduras* (revisión actualizada `S24` del 12 de octubre de 2026).
 
-**Fuente principal de caracterización:** `S24`. **Expediente completo:** `S24`, `S25`.
-
-Usar S24, revisión del 12 de octubre de 2026. S25 y el polígono preliminar del centro histórico son antecedentes; el ámbito actual es la mancha urbana consolidada dentro del Municipio del Distrito Central.
+**Articulación del expediente:** El ámbito operativo cubre la mancha urbana consolidada de Tegucigalpa y Comayagüela en el Municipio del Distrito Central (`S24`), mientras que el perfil preliminar focalizado en el centro histórico (`S25`) se conserva como antecedente.
