@@ -95,11 +95,11 @@
     }
   },
   "links": {
-    "repository": null,
-    "website": null,
+    "repository": "https://github.com/copernicuscentroamerica/urbano-hn-distrito-central",
+    "website": "https://copernicuscentroamerica.github.io/urbano-hn-distrito-central/",
     "demo": null,
-    "documentation": null,
-    "issue_tracker": null
+    "documentation": "https://github.com/copernicuscentroamerica/urbano-hn-distrito-central#readme",
+    "issue_tracker": "https://github.com/copernicuscentroamerica/urbano-hn-distrito-central/issues"
   },
   "governance": {
     "technical_owner": null,
