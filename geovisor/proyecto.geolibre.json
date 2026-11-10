@@ -1,55 +1,82 @@
 {
-  "version": "1.0.0",
-  "id": "geolibre-hn-distrito-central",
-  "name": "Honduras · Distrito Central: brecha catastral y asentamientos informales",
   "description": "La iniciativa propone comparar la ciudad construida con el catastro del Distrito Central para localizar diferencias, priorizar actualización y levantamientos y preparar un método que otros municipios puedan adaptar.",
-  "metadata": {
-    "project_id": "hn-distrito-central",
-    "community": "Comunidad Urbana Copernicus Centroamérica",
-    "referential_frame_only": true,
-    "note": "Encuadre referencial sobre Tegucigalpa y Comayagüela (Municipio del Distrito Central). Nota: el centroide 14.10253, -87.20542 y las 716,1 ha del formulario inicial pertenecen al antecedente del centro histórico; el ámbito vigente en S24 abarca toda la mancha urbana consolidada del MDC."
-  },
+  "id": "geolibre-hn-distrito-central",
+  "layers": [
+    {
+      "id": "hn-mdc-municipio-osm",
+      "name": "Límite municipal envolvente referencial: Distrito Central (OSM ODbL)",
+      "source": "hn-mdc-municipio-osm",
+      "status": "en_revision",
+      "style": {
+        "fill_color": "#007F8B",
+        "fill_opacity": 0.14,
+        "stroke_color": "#14283F",
+        "stroke_width": 2.2
+      },
+      "visible": true
+    }
+  ],
   "map": {
-    "engine": "maplibre",
+    "basemap": "carto-positron",
+    "bearing": 0,
     "center": [
       -87.20542,
       14.085
     ],
-    "zoom": 11.8,
-    "bearing": 0,
+    "engine": "maplibre",
     "pitch": 0,
-    "basemap": "carto-positron"
+    "zoom": 11.8
   },
-  "sources": {},
-  "layers": [],
+  "metadata": {
+    "community": "Comunidad Urbana Copernicus Centroamérica",
+    "note": "Encuadre referencial sobre Tegucigalpa y Comayagüela (Municipio del Distrito Central). Nota: el centroide 14.10253, -87.20542 y las 716,1 ha del formulario inicial pertenecen al antecedente del centro histórico; el ámbito vigente en S24 abarca toda la mancha urbana consolidada del MDC.",
+    "project_id": "hn-distrito-central",
+    "referential_frame_only": false,
+    "schema_version": "1.0.0"
+  },
+  "name": "Honduras · Distrito Central: brecha catastral y asentamientos informales",
   "planned_layers": [
     {
-      "id": "hn-mdc-mancha-consolidada",
-      "title": "Perímetro de mancha urbana consolidada del MDC (GHSL / Dynamic World + AMDC)",
-      "status": "en_preparacion",
+      "caveat": "Fuente externa abierta: OpenStreetMap contributors (ODbL). Representa el término municipal envolvente del MDC; la mancha urbana consolidada se delimita con GHSL/Dynamic World y el perímetro oficial de la AMDC.",
+      "expected_file_hint": "geovisor/capas/distrito_central_municipio_osm.geojson",
+      "id": "hn-mdc-municipio-osm",
+      "status": "en_revision",
+      "title": "Límite municipal envolvente referencial: Distrito Central (OSM ODbL)"
+    },
+    {
+      "caveat": "Sustituye el polígono preliminar del centro histórico (716,1 ha).",
       "expected_file_hint": "geovisor/data/mdc_mancha_urbana.geojson",
-      "caveat": "Sustituye el polígono preliminar del centro histórico (716,1 ha)."
+      "id": "hn-mdc-mancha-consolidada",
+      "status": "en_preparacion",
+      "title": "Perímetro de mancha urbana consolidada del MDC (GHSL / Dynamic World + AMDC)"
     },
     {
-      "id": "hn-mdc-huella-aparicion",
-      "title": "Ciudad construida y año estimado de aparición (2016–2026)",
-      "status": "en_preparacion",
+      "caveat": "Verificar cobertura temporal efectiva de Open Buildings 2.5D en el área.",
       "expected_file_hint": "geovisor/data/mdc_huella_multitemporal.geojson o Tile URL",
-      "caveat": "Verificar cobertura temporal efectiva de Open Buildings 2.5D en el área."
+      "id": "hn-mdc-huella-aparicion",
+      "status": "en_preparacion",
+      "title": "Ciudad construida y año estimado de aparición (2016–2026)"
     },
     {
-      "id": "hn-mdc-brecha-celdas-colonias",
-      "title": "Indicadores agregados de brecha catastral (colonia / celda 250 m)",
-      "status": "en_preparacion",
+      "caveat": "Protege la privacidad predial; la brecha física no constituye prueba de ilegalidad ni deuda tributaria.",
       "expected_file_hint": "geovisor/data/mdc_brecha_agregada_250m.geojson",
-      "caveat": "Protege la privacidad predial; la brecha física no constituye prueba de ilegalidad ni deuda tributaria."
+      "id": "hn-mdc-brecha-celdas-colonias",
+      "status": "en_preparacion",
+      "title": "Indicadores agregados de brecha catastral (colonia / celda 250 m)"
     },
     {
-      "id": "hn-mdc-tipologias-ae",
-      "title": "Tipología metodológica preliminar A–E (brecha, morfología y pendiente)",
-      "status": "en_preparacion",
+      "caveat": "Clasificación técnica propuesta para priorizar levantamientos y mejoramiento barrial; sujeta a muestreo de campo.",
       "expected_file_hint": "geovisor/data/mdc_tipologias_ae.geojson",
-      "caveat": "Clasificación técnica propuesta para priorizar levantamientos y mejoramiento barrial; sujeta a muestreo de campo."
+      "id": "hn-mdc-tipologias-ae",
+      "status": "en_preparacion",
+      "title": "Tipología metodológica preliminar A–E (brecha, morfología y pendiente)"
     }
-  ]
+  ],
+  "sources": {
+    "hn-mdc-municipio-osm": {
+      "type": "geojson",
+      "url": "/geovisor/capas/distrito_central_municipio_osm.geojson"
+    }
+  },
+  "version": "1.0.0"
 }

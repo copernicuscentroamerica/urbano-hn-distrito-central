@@ -43,6 +43,24 @@
   ],
   "layers": [
     {
+      "id": "hn-mdc-municipio-osm",
+      "title": "Límite municipal envolvente referencial: Distrito Central (OSM ODbL)",
+      "group": "Ámbito urbano vigente",
+      "format": "geojson",
+      "geometry_type": "polygon",
+      "status": "en_revision",
+      "source_path": "geovisor/capas/distrito_central_municipio_osm.geojson",
+      "expected_file_hint": "geovisor/capas/distrito_central_municipio_osm.geojson",
+      "resolution": "Vectorial municipal referencial (~149.894 ha, EPSG:4326)",
+      "style": {
+        "fill_color": "#007F8B",
+        "fill_opacity": 0.14,
+        "stroke_color": "#14283F",
+        "stroke_width": 2.2
+      },
+      "caveat": "Fuente externa abierta: OpenStreetMap contributors (ODbL). Representa el término municipal envolvente del MDC; la mancha urbana consolidada se delimita con GHSL/Dynamic World y el perímetro oficial de la AMDC."
+    },
+    {
       "id": "hn-mdc-mancha-consolidada",
       "title": "Perímetro de mancha urbana consolidada del MDC (GHSL / Dynamic World + AMDC)",
       "group": "Ámbito urbano vigente",
