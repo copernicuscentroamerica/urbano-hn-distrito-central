@@ -14,6 +14,13 @@ Contar con indicadores trazables y un kit replicable que conecte el trabajo muni
 - Alcaldía Municipal del Distrito Central (AMDC)
 - Secretaría de Gobernación, Justicia y Descentralización (SEGOB)
 
+## Equipo de la iniciativa
+
+- **Jonathan Ramirez** ([@jonathanjoya](https://github.com/jonathanjoya))
+- **Mario Matamoros**
+- **Maritza Irias**
+- **Mario Baide**
+
 ## Territorio
 
 Zona piloto: toda la mancha urbana consolidada del Municipio del Distrito Central, es decir, Tegucigalpa y Comayagüela.

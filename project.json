@@ -195,7 +195,36 @@
       }
     ]
   },
-  "team": [],
+  "team": [
+    {
+      "name": "Jonathan Ramirez",
+      "role": null,
+      "institution": null,
+      "github_username": "jonathanjoya",
+      "profile_url": "https://github.com/jonathanjoya"
+    },
+    {
+      "name": "Mario Matamoros",
+      "role": null,
+      "institution": null,
+      "github_username": null,
+      "profile_url": null
+    },
+    {
+      "name": "Maritza Irias",
+      "role": null,
+      "institution": null,
+      "github_username": null,
+      "profile_url": null
+    },
+    {
+      "name": "Mario Baide",
+      "role": null,
+      "institution": null,
+      "github_username": null,
+      "profile_url": null
+    }
+  ],
   "data_sources": [
     {
       "title": "Sentinel-2 / óptico multiespectral (composites de estación seca, índices)",
