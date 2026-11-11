@@ -10,7 +10,7 @@
  *   La brecha      → edificaciones y m² construidos fuera de predio catastrado
  *
  * Los predios se usan solo para el cálculo. Las salidas públicas son agregados
- * por manzana; la ocupación por lote se exporta como CSV sin geometría (uso interno).
+ * por celda de 250 m; la ocupación por lote se exporta como CSV sin geometría (uso interno).
  */
 
 // ---------------------------------------------------------------------------
@@ -37,6 +37,9 @@ var CONFIG = {
   unidad: 'celda',
   tamCelda: 250,
   exportarLotes: false,       // ocupación por lote (uso interno), aparte por su costo
+  // Etapa 1: guarda en assets una imagen de 4 m con lo construido y lo catastrado (una vez).
+  // Etapa 2: agrega esa imagen por celda o manzana (rápido). Cambiar a 2 cuando termine la 1.
+  etapa: 1,
   carpetaDrive: 'Copernicus_BrechaCatastral'
 };
 
@@ -94,15 +97,28 @@ var catastrado = ee.Image(0).byte().paint(prediosAoi, 1);
 var fuera = huella.and(catastrado.not());
 var nLotes = ee.Image(0).byte().paint(centroides(prediosAoi), 1);
 
+// Imagen base de 4 m (0/1 por banda). Pintar cientos de miles de polígonos en cada
+// agregación excede el tiempo de Earth Engine; por eso se materializa una vez como asset.
+var ASSET_BASE = PROYECTO + 'mdc_base_4m';
+var base = huella.rename('edif')
+  .addBands(nuevo.rename('nuevo'))
+  .addBands(critica.rename('critica'))
+  .addBands(conteo.rename('conteo'))
+  .addBands(catastrado.rename('catastrado'))
+  .addBands(nLotes.rename('lotes'))
+  .toByte().clip(aoi);
+var B = CONFIG.etapa === 2 ? ee.Image(ASSET_BASE) : base;
+
 var area = ee.Image.pixelArea();
-var pila = huella.multiply(area).rename('m2_edif')
-  .addBands(nuevo.multiply(area).rename('m2_nuevo'))
-  .addBands(huella.and(critica).multiply(area).rename('m2_critico'))
-  .addBands(conteo.rename('n_edif'))
-  .addBands(catastrado.multiply(area).rename('m2_catastrado'))
-  .addBands(fuera.multiply(area).rename('m2_fuera'))
-  .addBands(conteo.multiply(catastrado.not()).rename('n_edif_fuera'))
-  .addBands(nLotes.rename('n_lotes'));
+var pila = B.select('edif').multiply(area).rename('m2_edif')
+  .addBands(B.select('nuevo').multiply(area).rename('m2_nuevo'))
+  .addBands(B.select('edif').and(B.select('critica')).multiply(area).rename('m2_critico'))
+  .addBands(B.select('conteo').rename('n_edif'))
+  .addBands(B.select('catastrado').multiply(area).rename('m2_catastrado'))
+  .addBands(B.select('edif').and(B.select('catastrado').not()).multiply(area).rename('m2_fuera'))
+  .addBands(B.select('conteo').multiply(B.select('catastrado').not()).rename('n_edif_fuera'))
+  .addBands(B.select('lotes').rename('n_lotes'))
+  .addBands(B.select('edif').mask().multiply(area).rename('m2_valido'));
 
 // Grupos de sectores catastrales: el cálculo se divide en lotes de ~1.500–2.000 manzanas
 // para no exceder el tiempo máximo de Earth Engine. El último grupo recoge el resto.
@@ -117,14 +133,14 @@ function filtroGrupo(i) {
 }
 var N_GRUPOS = GRUPOS.length + 1;
 
-// Retícula de 250 m recortada al ámbito, dividida en 6 franjas oeste–este para exportar.
+// Retícula de 250 m, dividida en 6 franjas oeste–este para exportar. Las celdas se exportan
+// completas (recortarlas aquí al perímetro multiplica el tiempo de cálculo); la superficie
+// válida sale de los píxeles dentro del ámbito (m2_valido) y el recorte geométrico se hace
+// al integrar la capa al geovisor (src/gee/unir_celdas.py). Coordenadas exportadas en UTM 16N.
 var celdas = aoi.coveringGrid(ee.Projection(CONFIG.epsg).atScale(CONFIG.tamCelda))
   .map(function (f) {
-    var g = f.geometry().intersection(aoi, 1);
-    return ee.Feature(g, {unidad: f.id(), cx: f.geometry().centroid(1).coordinates().get(0),
-                          a_m2: g.area(1)});
-  })
-  .filter(ee.Filter.gt('a_m2', 100));   // descarta celdas que solo tocan el borde del ámbito
+    return f.set({unidad: f.id(), cx: f.geometry().centroid(1).coordinates().get(0)});
+  });
 var CORTES = [-87.30, -87.2577, -87.2268, -87.1959, -87.1650, -87.1341, -87.09];
 
 function indicadores(unidades) {
@@ -133,7 +149,7 @@ function indicadores(unidades) {
 }
 
 function tipificar(f) {
-  var ha = f.geometry().area(1).divide(10000);
+  var ha = ee.Number(f.get('m2_valido')).divide(10000).max(0.0001);   // superficie dentro del ámbito
   var m2 = ee.Number(f.get('m2_edif'));
   var hay = m2.gt(0);
   var den = m2.max(1);
@@ -165,7 +181,7 @@ function tipificar(f) {
 
 // Ocupación por lote (USO INTERNO): m² construidos dentro de cada predio
 function ocupacionLotes(lotes) {
-  return huella.multiply(area).reduceRegions({
+  return B.select('edif').multiply(area).reduceRegions({
     collection: lotes, reducer: ee.Reducer.sum().setOutputs(['m2_edif']),
     scale: 2, crs: CONFIG.epsg, tileScale: 4
   }).map(function (f) {
@@ -189,23 +205,29 @@ Map.addLayer(fuera.selfMask(), {palette: ['e31a1c']}, 'Edificación fuera de pre
 // ---------------------------------------------------------------------------
 var CAMPOS_PUBLICOS = ['unidad', 'SECTOR', 'MANZANA', 'ha', 'n_edif', 'n_edif_fuera', 'n_lotes', 'm2_edif', 'm2_fuera',
   'dens_edif_ha', 'area_media_m2', 'cobertura_edif', 'p_nuevo', 'p_critico', 'cobertura_catastral',
-  'p_fuera_catastro', 'brecha_catastral', 'tipologia', 'tipologia_brecha'];
+  'p_fuera_catastro', 'brecha_catastral', 'tipologia', 'tipologia_brecha', 'm2_valido'];
 
-Export.table.toDrive({
-  collection: ee.FeatureCollection([ee.Feature(mancha, {nombre: 'Mancha urbana consolidada GHSL 2020',
-                                                        umbral_m2_ha: CONFIG.umbralManchaM2})]),
-  description: 'MDC_mancha_urbana_ghsl', folder: CONFIG.carpetaDrive, fileFormat: 'GeoJSON'});
+if (CONFIG.etapa === 1) {
+  Export.image.toAsset({
+    image: base, description: 'MDC_base_4m', assetId: ASSET_BASE,
+    region: aoi, scale: 4, crs: CONFIG.epsg, maxPixels: 1e11,
+    pyramidingPolicy: {'.default': 'sample'}});
+  Export.table.toDrive({
+    collection: ee.FeatureCollection([ee.Feature(mancha, {nombre: 'Mancha urbana consolidada GHSL 2020',
+                                                          umbral_m2_ha: CONFIG.umbralManchaM2})]),
+    description: 'MDC_mancha_urbana_ghsl', folder: CONFIG.carpetaDrive, fileFormat: 'GeoJSON'});
+}
 
 // Brecha agregada: una exportación por franja (celdas) o por grupo de sectores (manzanas);
 // se unen después en el geovisor.
-if (CONFIG.unidad === 'celda') {
+if (CONFIG.etapa === 2 && CONFIG.unidad === 'celda') {
   for (var k = 0; k < CORTES.length - 1; k++) {
     Export.table.toDrive({
       collection: indicadores(celdas.filter(ee.Filter.rangeContains('cx', CORTES[k], CORTES[k + 1])))
-        .select(CAMPOS_PUBLICOS),
+        .filter(ee.Filter.gt('m2_valido', 100)).select(CAMPOS_PUBLICOS),
       description: 'MDC_brecha_celda250_s' + (k + 1), folder: CONFIG.carpetaDrive, fileFormat: 'GeoJSON'});
   }
-} else {
+} else if (CONFIG.etapa === 2) {
   for (var i = 0; i < N_GRUPOS; i++) {
     Export.table.toDrive({
       collection: indicadores(manzanas.filterBounds(aoi).filter(filtroGrupo(i))).select(CAMPOS_PUBLICOS),
@@ -214,7 +236,7 @@ if (CONFIG.unidad === 'celda') {
 }
 
 // Ocupación por lote (uso interno), por grupo de sectores
-for (var j = 0; CONFIG.exportarLotes && j < N_GRUPOS; j++) {
+for (var j = 0; CONFIG.etapa === 2 && CONFIG.exportarLotes && j < N_GRUPOS; j++) {
   var g = 'g' + (j + 1);
   Export.table.toDrive({
     collection: ocupacionLotes(prediosAoi.filter(filtroGrupo(j))),

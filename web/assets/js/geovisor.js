@@ -513,6 +513,69 @@
       attachFeatureClickPopup(prefixId + "-pt", badgeLabel, layerTitle);
     }
 
+    // Leyenda sobre el mapa: una entrada por capa visible. Usa "legend" de layers.json
+    // (rampa con "stops": [[valor, color, etiqueta], ...]) o, si no existe, el color de la capa.
+    var legendBox = null;
+    function esc(t) {
+      return String(t == null ? "" : t).replace(/[&<>"']/g, function (c) {
+        return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+      });
+    }
+    function renderLegend() {
+      if (!mapInstance) return;
+      if (!legendBox) {
+        legendBox = document.createElement("div");
+        legendBox.className = "maplibregl-ctrl gv-legend";
+        legendBox.setAttribute("role", "region");
+        legendBox.setAttribute("aria-label", "Leyenda del mapa");
+        legendBox.style.cssText = "background:rgba(255,255,255,0.94);color:#14283F;padding:8px 10px;border-radius:6px;" +
+          "box-shadow:0 1px 4px rgba(0,0,0,0.2);font:12px/1.35 system-ui,sans-serif;max-width:240px;max-height:55vh;overflow:auto;";
+        var ctrl = {
+          onAdd: function () { return legendBox; },
+          onRemove: function () { if (legendBox.parentNode) legendBox.parentNode.removeChild(legendBox); }
+        };
+        mapInstance.addControl(ctrl, "bottom-left");
+      }
+      var html = "";
+      (cfg.layers || []).forEach(function (lyr) {
+        if (!lyr.source_path || (lyr.status !== "publicado" && lyr.status !== "en_revision")) return;
+        var chk = document.querySelector('[data-layer-toggle="' + lyr.id + '"]');
+        if (chk ? !chk.checked : lyr.visible === false) return;
+        var st = lyr.style || {};
+        var lg = lyr.legend || {};
+        var title = lg.title || lyr.legend_title || lyr.title;
+        if (Array.isArray(lg.classes) && lg.classes.length) {
+          html += '<div style="margin:2px 0 8px"><div style="font-weight:600;margin-bottom:4px">' + esc(title) + "</div>" +
+            lg.classes.map(function (k) {
+              return '<div style="display:flex;align-items:center;gap:6px;margin:2px 0">' +
+                '<span style="flex:none;width:14px;height:12px;border:1px solid #556;background:' + k[1] + '"></span>' +
+                "<span>" + esc(k[0]) + "</span></div>";
+            }).join("") +
+            (lg.note ? '<div style="font-size:11px;color:#4a5a6a;margin-top:2px">' + esc(lg.note) + "</div>" : "") + "</div>";
+        } else if (Array.isArray(lg.stops) && lg.stops.length > 1) {
+          var grad = lg.stops.map(function (s) { return s[1] + " " + (s[0] * 100) + "%"; }).join(",");
+          html += '<div style="margin:2px 0 8px"><div style="font-weight:600;margin-bottom:4px">' + esc(title) + "</div>" +
+            '<div style="height:10px;border:1px solid #9aa;border-radius:2px;background:linear-gradient(to right,' + grad + ')"></div>' +
+            '<div style="position:relative;height:14px;font-size:11px">' +
+            lg.stops.filter(function (s) { return s[2]; }).map(function (s) {
+              var x = s[0] * 100;
+              var tr = x <= 0 ? "translateX(0)" : x >= 100 ? "translateX(-100%)" : "translateX(-50%)";
+              return '<span style="position:absolute;white-space:nowrap;left:' + x + "%;transform:" + tr + '">' + esc(s[2]) + "</span>";
+            }).join("") + "</div>" +
+            (lg.note ? '<div style="font-size:11px;color:#4a5a6a;margin-top:2px">' + esc(lg.note) + "</div>" : "") + "</div>";
+        } else {
+          var fill = typeof st.fill_color === "string" ? st.fill_color : "#007F8B";
+          var op = st.fill_opacity !== undefined ? st.fill_opacity : 0.22;
+          var stroke = st.stroke_color || "#14283F";
+          html += '<div style="display:flex;align-items:center;gap:6px;margin:3px 0">' +
+            '<span style="flex:none;width:16px;height:12px;border:2px solid ' + stroke + ';background:' + (op > 0 ? fill : "transparent") +
+            ';opacity:' + (op > 0 ? Math.max(op, 0.35) : 1) + '"></span><span>' + esc(title) + "</span></div>";
+        }
+      });
+      legendBox.innerHTML = html;
+      legendBox.style.display = html ? "block" : "none";
+    }
+
     function addActiveProjectLayers() {
       var layers = Array.isArray(cfg.layers) ? cfg.layers : [];
       var combinedBounds = null;
@@ -584,6 +647,7 @@
                   mapInstance.setLayoutProperty(lyr.id + suf, "visibility", vis);
                 }
               });
+              renderLegend();
             };
           }
           var slider = document.querySelector('[data-layer-opacity="' + lyr.id + '"]');
@@ -639,6 +703,7 @@
     if (mapInstance) {
       mapInstance.on("load", function () {
         addActiveProjectLayers();
+        renderLegend();
         setTimeout(function () {
           initialBoundsFitted = true;
         }, 2500);
