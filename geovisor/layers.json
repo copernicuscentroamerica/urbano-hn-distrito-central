@@ -17,7 +17,7 @@
       14.10253
     ],
     "is_referential": true,
-    "reference_note": "Encuadre referencial sobre Tegucigalpa y Comayagüela (Municipio del Distrito Central). Nota: el centroide 14.10253, -87.20542 y las 716,1 ha del formulario inicial pertenecen al antecedente del centro histórico; el ámbito vigente en S24 abarca toda la mancha urbana consolidada del MDC.",
+    "reference_note": "Encuadre sobre Tegucigalpa y Comayagüela (Municipio del Distrito Central). El ámbito de lo catastrado es el perímetro urbano oficial PU 2025 de la AMDC; la mancha urbana consolidada (lo construido) se obtiene con el notebook de Earth Engine. El centroide 14.10253, -87.20542 y las 716,1 ha del formulario inicial corresponden al antecedente del centro histórico.",
     "area_declared": "Por calcular sobre el polígono homologado de la mancha urbana consolidada del MDC (716,1 ha es solo antecedente preliminar).",
     "scale_label": "Ciudad (mancha urbana consolidada), con agregación pública por colonia o celda de 250 m"
   },
@@ -39,13 +39,19 @@
       "url": "https://openeo.dataspace.copernicus.eu/",
       "kind": "documentacion_tecnica",
       "note": "Entorno previsto en S24 junto con Google Earth Engine para el kit replicable municipal."
+    },
+    {
+      "label": "SIMET — Sistema de Información Municipal y Estadística Territorial",
+      "url": "https://mapas.simet.amdc.hn/catalogue/#/map/727",
+      "kind": "fuente_oficial",
+      "note": "Portal de mapas de la AMDC con capas oficiales de planimetría, uso de suelo, infraestructura y servicios del Distrito Central."
     }
   ],
   "layers": [
     {
       "id": "hn-mdc-municipio-osm",
       "title": "Límite municipal envolvente referencial: Distrito Central (OSM ODbL)",
-      "group": "Ámbito urbano vigente",
+      "group": "Contexto territorial",
       "format": "geojson",
       "geometry_type": "polygon",
       "status": "en_revision",
@@ -58,79 +64,344 @@
         "stroke_color": "#14283F",
         "stroke_width": 2.2
       },
-      "caveat": "Fuente externa abierta: OpenStreetMap contributors (ODbL). Representa el término municipal envolvente del MDC; la mancha urbana consolidada se delimita con GHSL/Dynamic World y el perímetro oficial de la AMDC."
+      "caveat": "Fuente externa abierta: OpenStreetMap contributors (ODbL). Representa el término municipal envolvente del MDC; la mancha urbana consolidada se delimita con GHSL/Dynamic World y el perímetro oficial de la AMDC.",
+      "visible": false,
+      "legend_title": "Límite municipal (OSM)"
+    },
+    {
+      "id": "hn-mdc-perimetro-urbano-amdc",
+      "title": "Perímetro urbano oficial del Distrito Central (PU 2025, AMDC)",
+      "group": "1 · Lo catastrado (AMDC)",
+      "format": "geojson",
+      "geometry_type": "polygon",
+      "status": "publicado",
+      "source_path": "geovisor/capas/mdc_perimetro_urbano_amdc.geojson",
+      "expected_file_hint": "geovisor/capas/mdc_perimetro_urbano_amdc.geojson",
+      "resolution": "Vectorial — polígono oficial PU_2025, 24.431 ha (EPSG:4326)",
+      "style": {
+        "fill_color": "#14283F",
+        "fill_opacity": 0,
+        "stroke_color": "#14283F",
+        "stroke_width": 2.8
+      },
+      "caveat": "Límite urbano administrativo de la AMDC (ámbito de lo catastrado urbano); incluye áreas no construidas. No equivale a la mancha urbana consolidada (huella construida).",
+      "legend_title": "Perímetro urbano PU 2025"
+    },
+    {
+      "id": "hn-mdc-sectores",
+      "title": "Sectores catastrales del Distrito Central (AMDC)",
+      "group": "1 · Lo catastrado (AMDC)",
+      "format": "geojson",
+      "geometry_type": "polygon",
+      "status": "publicado",
+      "source_path": "geovisor/capas/mdc_sectores.geojson",
+      "expected_file_hint": "geovisor/capas/mdc_sectores.geojson",
+      "resolution": "Vectorial — 59 sectores catastrales (EPSG:4326)",
+      "style": {
+        "fill_color": "#007F8B",
+        "fill_opacity": 0.15,
+        "stroke_color": "#005a63",
+        "stroke_width": 2.0
+      },
+      "caveat": "Fuente: planimetría oficial AMDC (noviembre 2026). Incluye sectores urbanos y rurales del Distrito Central.",
+      "visible": false,
+      "legend_title": "Sectores catastrales"
+    },
+    {
+      "id": "hn-mdc-colonias-urbanas",
+      "title": "Colonias y barrios del área urbana del MDC (AMDC)",
+      "group": "1 · Lo catastrado (AMDC)",
+      "format": "geojson",
+      "geometry_type": "polygon",
+      "status": "publicado",
+      "source_path": "geovisor/capas/mdc_colonias_urbanas.geojson",
+      "expected_file_hint": "geovisor/capas/mdc_colonias_urbanas.geojson",
+      "resolution": "Vectorial — 1,028 colonias (EPSG:4326)",
+      "style": {
+        "fill_color": "#f46d43",
+        "fill_opacity": 0.12,
+        "stroke_color": "#b35806",
+        "stroke_width": 0.6
+      },
+      "caveat": "Fuente: planimetría oficial AMDC (noviembre 2026). Cada polígono incluye nombre de colonia, sector, tipo y área.",
+      "legend_title": "Colonias urbanas"
+    },
+    {
+      "id": "hn-mdc-colonias-rurales",
+      "title": "Colonias rurales del Distrito Central (AMDC)",
+      "group": "1 · Lo catastrado (AMDC)",
+      "format": "geojson",
+      "geometry_type": "polygon",
+      "status": "publicado",
+      "source_path": "geovisor/capas/mdc_colonias_rurales.geojson",
+      "expected_file_hint": "geovisor/capas/mdc_colonias_rurales.geojson",
+      "resolution": "Vectorial — 87 colonias rurales (EPSG:4326)",
+      "style": {
+        "fill_color": "#74add1",
+        "fill_opacity": 0.25,
+        "stroke_color": "#4575b4",
+        "stroke_width": 1.0
+      },
+      "caveat": "Fuente: planimetría oficial AMDC (noviembre 2026). Colonias ubicadas en los sectores rurales del Distrito Central.",
+      "visible": false,
+      "legend_title": "Colonias rurales"
+    },
+    {
+      "id": "hn-mdc-manzanas",
+      "title": "Manzanas catastrales del Distrito Central (AMDC)",
+      "group": "1 · Lo catastrado (AMDC)",
+      "format": "geojson",
+      "geometry_type": "polygon",
+      "status": "publicado",
+      "source_path": "geovisor/capas/mdc_manzanas.geojson",
+      "expected_file_hint": "geovisor/capas/mdc_manzanas.geojson",
+      "resolution": "Vectorial — 15,022 manzanas (EPSG:4326)",
+      "style": {
+        "fill_color": "#abd9e9",
+        "fill_opacity": 0.3,
+        "stroke_color": "#2c7bb6",
+        "stroke_width": 0.5
+      },
+      "caveat": "Fuente: planimetría oficial AMDC (noviembre 2026). Linderos de manzana de todos los sectores urbanos y rurales disponibles. Se excluyeron los registros con geometría lineal (no poligonal).",
+      "visible": false,
+      "legend_title": "Manzanas catastrales"
+    },
+    {
+      "id": "hn-mdc-zonas-riesgo-amdc",
+      "title": "Zonas de deslizamiento e inhabitables (AMDC)",
+      "group": "1 · Lo catastrado (AMDC)",
+      "format": "geojson",
+      "geometry_type": "polygon",
+      "status": "publicado",
+      "source_path": "geovisor/capas/mdc_zonas_riesgo_amdc.geojson",
+      "expected_file_hint": "geovisor/capas/mdc_zonas_riesgo_amdc.geojson",
+      "resolution": "Vectorial — 4 polígonos, 49,8 ha (sectores 02 y 09; EPSG:4326)",
+      "style": {
+        "fill_color": "#6a51a3",
+        "fill_opacity": 0.35,
+        "stroke_color": "#3f007d",
+        "stroke_width": 1.2
+      },
+      "visible": false,
+      "legend_title": "Zonas de riesgo AMDC",
+      "caveat": "Fuente: planimetría AMDC (noviembre 2026). Incluye la zona inhabitable del Acuerdo N.° 033 (acta 016 del 11/07/2024). No es un mapa de amenazas completo del MDC."
     },
     {
       "id": "hn-mdc-mancha-consolidada",
-      "title": "Perímetro de mancha urbana consolidada del MDC (GHSL / Dynamic World + AMDC)",
-      "group": "Ámbito urbano vigente",
+      "title": "Mancha urbana consolidada (huella construida GHSL 2020)",
+      "group": "2 · Lo construido (satélite)",
       "format": "geojson",
       "geometry_type": "polygon",
-      "status": "en_preparacion",
-      "source_path": null,
+      "status": "en_revision",
+      "source_path": "geovisor/capas/mdc_mancha_urbana.geojson",
       "expected_file_hint": "geovisor/capas/mdc_mancha_urbana.geojson",
-      "resolution": "10 m homologado con perímetro urbano AMDC",
+      "resolution": "100 m — GHSL built_surface >= 1.000 m²/ha, cierre morfológico, núcleos >= 50 ha; 15.204 ha en 51 núcleos",
       "style": {
-        "fill_color": "#14283F",
-        "fill_opacity": 0.08,
-        "stroke_color": "#14283F",
-        "stroke_width": 2.2
+        "fill_color": "#FF7F00",
+        "fill_opacity": 0.18,
+        "stroke_color": "#FF7F00",
+        "stroke_width": 2.0
       },
-      "caveat": "Sustituye el polígono preliminar del centro histórico (716,1 ha)."
+      "caveat": "Calculada en Google Earth Engine (script src/gee/brecha_catastral_mdc.js, 11/11/2026). Abarca todo el municipio: incluye núcleos construidos fuera del perímetro urbano PU 2025.",
+      "fit_bounds": false,
+      "legend_title": "Mancha urbana GHSL 2020"
     },
     {
       "id": "hn-mdc-huella-aparicion",
-      "title": "Ciudad construida y año estimado de aparición (2016–2026)",
-      "group": "Nivel 1: Datos globales",
-      "format": "xyz_or_cog",
-      "geometry_type": "raster",
-      "status": "en_preparacion",
-      "source_path": null,
-      "expected_file_hint": "geovisor/capas/mdc_huella_multitemporal.geojson o Tile URL",
-      "resolution": "10 m (Sentinel-2 / Dynamic World / Open Buildings 2.5D)",
-      "style": {
-        "fill_color": "#007F8B",
-        "fill_opacity": 0.45,
-        "stroke_color": "#005a63",
-        "stroke_width": 1
-      },
-      "caveat": "Verificar cobertura temporal efectiva de Open Buildings 2.5D en el área."
-    },
-    {
-      "id": "hn-mdc-brecha-celdas-colonias",
-      "title": "Indicadores agregados de brecha catastral (colonia / celda 250 m)",
-      "group": "Nivel 3: Brecha agregada pública",
+      "title": "Ciudad construida y año estimado de consolidación (2017–2025)",
+      "group": "2 · Lo construido (satélite)",
       "format": "geojson",
       "geometry_type": "polygon",
-      "status": "en_preparacion",
-      "source_path": null,
-      "expected_file_hint": "geovisor/capas/mdc_brecha_agregada_250m.geojson",
-      "resolution": "Celdas de 250 m o colonias homologadas",
+      "status": "en_revision",
+      "source_path": "geovisor/capas/mdc_huella_multitemporal.geojson",
+      "expected_file_hint": "geovisor/capas/mdc_huella_multitemporal.geojson",
+      "resolution": "Celdas de 250 m con edificación (2.934); Dynamic World 10 m y Open Buildings 2.5D Temporal 4 m",
       "style": {
-        "fill_color": "#e66101",
-        "fill_opacity": 0.5,
-        "stroke_color": "#b35806",
-        "stroke_width": 1
+        "fill_color": [
+          "match",
+          [
+            "get",
+            "periodo"
+          ],
+          "Consolidada a 2017",
+          "#c6dbdf",
+          "Crecimiento 2018–2021",
+          "#fd8d3c",
+          "Crecimiento 2022–2025",
+          "#bd0026",
+          "Edificación dispersa (no detectada por Dynamic World)",
+          "#9e9ac8",
+          "#cccccc"
+        ],
+        "fill_opacity": 0.6,
+        "stroke_color": "#555555",
+        "stroke_width": 0.2
       },
-      "caveat": "Protege la privacidad predial; la brecha física no constituye prueba de ilegalidad ni deuda tributaria."
+      "caveat": "Año en que la celda pasa a superficie construida estable según Dynamic World (estación seca, confirmada al año siguiente). Línea base calibrada con el centro histórico como zona de control: en 2016 ambas fuentes subdetectan lo ya construido (Open Buildings 2.5D detecta solo el 75 % del centro histórico ese año y no llega al 95 % hasta 2020), y 2017 muestra un salto anómalo en la periferia; por eso todo lo detectado hasta 2017 se trata como existente. \"Crecimiento\" = al menos 25 % de la superficie construida de la celda se consolidó después de 2017. Open Buildings 2.5D queda como atributo de contraste (p_ob_nuevo, posterior a 2020). Preliminar, sin validación de campo.",
+      "visible": false,
+      "legend": {
+        "title": "Año estimado de consolidación",
+        "classes": [
+          [
+            "Consolidada a 2017",
+            "#c6dbdf"
+          ],
+          [
+            "Crecimiento 2018–2021",
+            "#fd8d3c"
+          ],
+          [
+            "Crecimiento 2022–2025",
+            "#bd0026"
+          ],
+          [
+            "Edificación dispersa (no detectada por Dynamic World)",
+            "#9e9ac8"
+          ]
+        ],
+        "note": "Preliminar. Dynamic World con línea base 2017 calibrada en el centro histórico. Celdas de 250 m."
+      }
+    },
+    {
+      "id": "hn-mdc-brecha-agregada",
+      "title": "Brecha catastral: % de lo construido fuera de predio catastrado (celdas de 250 m)",
+      "group": "3 · Brecha: catastrado vs. construido",
+      "format": "geojson",
+      "geometry_type": "polygon",
+      "status": "en_revision",
+      "source_path": "geovisor/capas/mdc_brecha_agregada.geojson",
+      "expected_file_hint": "geovisor/capas/mdc_brecha_agregada.geojson",
+      "resolution": "4.249 celdas de 250 m recortadas al perímetro urbano PU 2025; cálculo a 4 m (Open Buildings v3 × predios AMDC)",
+      "style": {
+        "fill_color": [
+          "interpolate",
+          [
+            "linear"
+          ],
+          [
+            "coalesce",
+            [
+              "get",
+              "p_fuera_catastro"
+            ],
+            0
+          ],
+          0,
+          "#fff5f0",
+          0.1,
+          "#fcbba1",
+          0.25,
+          "#fc9272",
+          0.5,
+          "#ef3b2c",
+          0.75,
+          "#a50f15",
+          1,
+          "#67000d"
+        ],
+        "fill_opacity": 0.6,
+        "stroke_color": "#7f2704",
+        "stroke_width": 0.3
+      },
+      "caveat": "Proporción de m² construidos (huellas Open Buildings v3, confianza ≥ 0,70) que no caen dentro de un predio del parcelario AMDC. Resultado técnico preliminar (11/11/2026), sin verificación de campo: no prueba ilegalidad ni deuda tributaria y no se publica a nivel de predio.",
+      "legend": {
+        "title": "Brecha catastral: % de lo construido fuera de predio",
+        "stops": [
+          [
+            0,
+            "#fff5f0",
+            "0 %"
+          ],
+          [
+            0.1,
+            "#fcbba1",
+            ""
+          ],
+          [
+            0.25,
+            "#fc9272",
+            "25 %"
+          ],
+          [
+            0.5,
+            "#ef3b2c",
+            "50 %"
+          ],
+          [
+            0.75,
+            "#a50f15",
+            "75 %"
+          ],
+          [
+            1,
+            "#67000d",
+            "100 %"
+          ]
+        ],
+        "note": "Celdas de 250 m. Desde 50 % se considera brecha catastral. Resultado preliminar."
+      }
     },
     {
       "id": "hn-mdc-tipologias-ae",
-      "title": "Tipología metodológica preliminar A–E (brecha, morfología y pendiente)",
-      "group": "Nivel 4: Priorización municipal",
+      "title": "Tipología preliminar A–E (brecha, ocupación reciente y condición crítica)",
+      "group": "3 · Brecha: catastrado vs. construido",
       "format": "geojson",
       "geometry_type": "polygon",
-      "status": "en_preparacion",
-      "source_path": null,
+      "status": "en_revision",
+      "source_path": "geovisor/capas/mdc_tipologias_ae.geojson",
       "expected_file_hint": "geovisor/capas/mdc_tipologias_ae.geojson",
-      "resolution": "Agregación por colonia / sector",
+      "resolution": "Celdas de 250 m con edificación (3.220); reglas del Anexo A de la ficha N.° 8",
       "style": {
-        "fill_color": "#5e3c99",
-        "fill_opacity": 0.45,
-        "stroke_color": "#2d004b",
-        "stroke_width": 1.2
+        "fill_color": [
+          "match",
+          [
+            "get",
+            "tipo_ae"
+          ],
+          "A",
+          "#1a9850",
+          "B",
+          "#fee08b",
+          "C",
+          "#f46d43",
+          "D",
+          "#d73027",
+          "E",
+          "#67001f",
+          "#cccccc"
+        ],
+        "fill_opacity": 0.65,
+        "stroke_color": "#555555",
+        "stroke_width": 0.2
       },
-      "caveat": "Clasificación técnica propuesta para priorizar levantamientos y mejoramiento barrial; sujeta a muestreo de campo."
+      "caveat": "Reglas del Anexo A de la ficha N.° 8 aplicadas por celda de 250 m. Limitaciones: (1) el tipo B no incluye \"predios baldíos ocupados\" porque el parcelario no trae ese campo; (2) el tipo E usa pendiente ≥ 30 % (Copernicus DEM) y las zonas de riesgo AMDC disponibles, que cubren solo ~50 ha; (3) la distinción C/D depende del año de aparición de Open Buildings 2.5D, que podría sobrestimar la construcción reciente y debe verificarse en campo. Clasificación técnica para priorizar levantamientos; no declara condición jurídica ni de riesgo.",
+      "visible": false,
+      "legend": {
+        "title": "Tipología preliminar A–E",
+        "classes": [
+          [
+            "A · Formal consolidado (<10 % fuera de predio)",
+            "#1a9850"
+          ],
+          [
+            "B · Catastrado con brecha (≥10 %)",
+            "#fee08b"
+          ],
+          [
+            "C · Informal consolidado (≥50 %)",
+            "#f46d43"
+          ],
+          [
+            "D · Ocupación reciente (≥50 % y ≥50 % nueva)",
+            "#d73027"
+          ],
+          [
+            "E · Brecha en condición crítica (pendiente ≥30 %)",
+            "#67001f"
+          ]
+        ],
+        "note": "Preliminar, sujeta a validación de campo. Celdas de 250 m."
+      }
     }
   ]
 }
