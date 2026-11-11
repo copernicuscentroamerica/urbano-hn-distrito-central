@@ -1144,6 +1144,7 @@ def build_aplicacion_page(
               <button type="button" id="gv-open-folder-tab" class="btn btn-outline-light btn-xs">Cargar desde carpeta</button>
               <button type="button" id="gv-reset-view" class="btn btn-outline-light btn-xs">Encuadre inicial</button>
               <a class="btn btn-outline-light btn-xs" href="{html.escape(ctx.site_url('assets/descargas/atlas_copernicus_zona_estudio.pdf'), quote=True)}" download="Atlas_Copernicus_{esc(pid)}.pdf" title="Descargar Atlas Temático Copernicus con identidad gráfica institucional en PDF">📥 Atlas PDF</a>
+              {presentation_download_button(ctx, pid, small=True)}
               <a class="btn btn-outline-light btn-xs" href="{geolibre_json_href}">JSON GeoLibre</a>
               <a id="btn-open-geolibre-studio" class="btn btn-primary btn-xs" href="{html.escape(studio_open_href, quote=True)}" target="_blank" rel="noopener noreferrer">Abrir en GeoLibre Studio ↗</a>
             </div>
@@ -1324,6 +1325,19 @@ def build_metodologia_page(
         body_html=body,
     )
 
+
+
+def presentation_download_button(ctx, pid: str, small: bool = False) -> str:
+    """Botón de descarga de la presentación del avance, solo si el PDF existe en web/assets/descargas/."""
+    fname = f"presentacion_avance_{pid}.pdf"
+    if not (ROOT / "web" / "assets" / "descargas" / fname).is_file():
+        return ""
+    href = html.escape(ctx.site_url(f"assets/descargas/{fname}") if ctx else f"../assets/descargas/{fname}", quote=True)
+    if small:
+        return (f'<a class="btn btn-outline-light btn-xs" href="{href}" download="Presentacion_avance_{html.escape(pid)}.pdf" '
+                f'title="Descargar la presentación del avance técnico en PDF">📊 Presentación PDF</a>')
+    return (f'<a class="btn btn-teal" href="{href}" download="Presentacion_avance_{html.escape(pid)}.pdf">'
+            f'📊 Descargar presentación del avance (PDF · 21 diapositivas)</a>')
 
 def render_copernicus_study_area_atlas_section(
     territory_label: str,
@@ -1619,6 +1633,7 @@ def render_copernicus_study_area_atlas_section(
           </div>
           <div class="atlas-pdf-banner-actions">
             <a class="btn btn-primary" href="{pdf_href}" download="{esc(pdf_dl_name)}">📥 Descargar Atlas Institucional Completo (PDF · 37 Págs. · 84 variantes)</a>
+            {presentation_download_button(ctx, pid)}
             <button type="button" class="btn btn-teal" data-atlas-export-pdf>🖨️ Exportar lámina / año actual a PDF</button>
             <a class="btn btn-outline-light btn-xs" href="{pdf_href}" target="_blank" rel="noopener noreferrer">Abrir PDF en pestaña ↗</a>
           </div>
