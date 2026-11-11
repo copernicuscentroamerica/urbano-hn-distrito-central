@@ -9,7 +9,7 @@
 
 ### Información pendiente
 
-- Perímetro urbano, límite municipal y colonias homologados.
+- Límite municipal homologado. El perímetro urbano PU 2025 y las colonias de la AMDC ya se incorporaron (noviembre de 2026); falta confirmar con la AMDC su vigencia oficial.
 - Acuerdo de acceso y uso del parcelario y fecha de actualización por predio.
 - Inventario actualizado de asentamientos, zonas de amenaza y muestras de verificación.
 - Método de homologación de edificios y catastro y parámetros de tipología.

@@ -549,7 +549,12 @@
                 "CAPA DEL PROYECTO · " + (lyr.status || "").toUpperCase(),
                 lyr.title
               );
-              if (!initialBoundsFitted) {
+              if (lyr.visible === false) {
+                ["-fill", "-line", "-pt"].forEach(function (suf) {
+                  if (mapInstance.getLayer(lyr.id + suf)) mapInstance.setLayoutProperty(lyr.id + suf, "visibility", "none");
+                });
+              }
+              if (!initialBoundsFitted && lyr.visible !== false && lyr.fit_bounds !== false) {
                 var b = computeGeoJsonBounds(gj);
                 if (b) {
                   if (!combinedBounds) {
@@ -571,7 +576,7 @@
           var chk = document.querySelector('[data-layer-toggle="' + lyr.id + '"]');
           if (chk) {
             chk.disabled = false;
-            chk.checked = true;
+            chk.checked = lyr.visible !== false;
             chk.onchange = function () {
               var vis = chk.checked ? "visible" : "none";
               ["-fill", "-line", "-pt"].forEach(function (suf) {
