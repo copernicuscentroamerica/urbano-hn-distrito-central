@@ -747,7 +747,7 @@ def build_proyecto_page(
                 fig_cards.append(
                     f"""
                     <article class="card">
-                      <span class="badge badge-ok">Evidencia gráfica del repositorio</span>
+                      <span class="badge badge-warn">Resultado preliminar</span>
                       <h3 style="margin:0.35rem 0 0.5rem;font-size:1rem;">{f_label}</h3>
                       <a href="{f_url}" target="_blank" rel="noopener noreferrer" style="display:block;border:1px solid var(--c-border);border-radius:8px;overflow:hidden;background:#070A14;">
                         <img src="{f_url}" alt="{f_label}" style="width:100%;height:auto;display:block;" loading="lazy">
@@ -1264,7 +1264,7 @@ def build_metodologia_page(
                 fig_cards.append(
                     f"""
                     <article class="card">
-                      <span class="badge badge-ok">Evidencia gráfica del repositorio</span>
+                      <span class="badge badge-warn">Resultado preliminar</span>
                       <h3 style="margin:0.35rem 0 0.5rem;font-size:1rem;">{f_label}</h3>
                       <a href="{f_url}" target="_blank" rel="noopener noreferrer" style="display:block;border:1px solid var(--c-border);border-radius:8px;overflow:hidden;background:#070A14;">
                         <img src="{f_url}" alt="{f_label}" style="width:100%;height:auto;display:block;" loading="lazy">
@@ -1737,6 +1737,97 @@ def render_copernicus_study_area_atlas_section(
     """
 
 
+def render_resultados_preliminares_section(ctx: SiteContext, pid: str) -> str:
+    """Sección de resultados preliminares a partir de content/resultados_preliminares.json."""
+    src = ROOT / "content" / "resultados_preliminares.json"
+    if not src.is_file():
+        return ""
+    data = json.loads(src.read_text(encoding="utf-8"))
+
+    kpis = "".join(
+        f"""
+        <div style="background:#fff;border:1px solid var(--c-border);border-radius:10px;padding:0.9rem 1rem;">
+          <div style="font-size:1.7rem;font-weight:800;color:var(--c-brand-blue);line-height:1.1;">{esc(k.get('valor'))}</div>
+          <div style="font-weight:700;margin-top:0.2rem;">{esc(k.get('etiqueta'))}</div>
+          <div style="font-size:0.82rem;color:var(--c-text-muted);margin-top:0.25rem;">{esc(k.get('detalle'), '')}</div>
+        </div>"""
+        for k in data.get("indicadores", [])
+    )
+
+    geovisor_href = html.escape(ctx.site_url("aplicacion/"), quote=True)
+    capas_cards = []
+    for c in data.get("capas", []):
+        rel = str(c.get("archivo", ""))
+        if not (ROOT / rel).is_file():
+            continue
+        dl_href = html.escape(ctx.site_url(rel), quote=True)
+        size_mb = (ROOT / rel).stat().st_size / 1_048_576
+        capas_cards.append(
+            f"""
+            <article class="card">
+              <span class="badge badge-warn">Preliminar · en revisión</span>
+              <h3 style="margin:0.4rem 0 0.4rem;font-size:1rem;">{esc(c.get('titulo'))}</h3>
+              <p style="font-size:0.88rem;">{esc(c.get('descripcion'), '')}</p>
+              <div class="card-footer">
+                <a class="btn btn-outline btn-xs" href="{geovisor_href}">Ver en el geovisor</a>
+                <a class="btn btn-outline btn-xs" href="{dl_href}" download>Descargar GeoJSON ({size_mb:.1f} MB)</a>
+              </div>
+            </article>"""
+        )
+
+    slug = ctx.github_repository or ctx.canonical_repository
+    scripts_li = []
+    for s in data.get("scripts", []):
+        ruta = str(s.get("ruta", ""))
+        if not (ROOT / ruta).is_file():
+            continue
+        if slug:
+            url = html.escape(f"https://github.com/{slug}/blob/main/{ruta}", quote=True)
+            scripts_li.append(f'<li><a href="{url}" target="_blank" rel="noopener noreferrer">{esc(s.get("titulo"))}</a> · <code>{esc(ruta)}</code></li>')
+        else:
+            scripts_li.append(f"<li>{esc(s.get('titulo'))} · <code>{esc(ruta)}</code></li>")
+
+    descargas = []
+    for fname, label in (
+        (f"atlas_copernicus_{pid}.pdf", "📥 Atlas con resultados (PDF)"),
+        (f"presentacion_avance_{pid}.pdf", "📊 Presentación del avance (PDF)"),
+    ):
+        if (ROOT / "web" / "assets" / "descargas" / fname).is_file():
+            href = html.escape(ctx.site_url(f"assets/descargas/{fname}"), quote=True)
+            descargas.append(f'<a class="btn btn-primary btn-xs" href="{href}" download="{esc(fname)}">{label}</a>')
+    descargas.append(f'<a class="btn btn-teal btn-xs" href="{geovisor_href}">🗺️ Abrir el geovisor</a>')
+
+    discrepancia = data.get("discrepancia")
+    discrepancia_html = (
+        f"""<div style="background:#FFF8E6;border-left:3px solid #E0A800;padding:0.65rem 0.85rem;border-radius:4px;font-size:0.88rem;margin-top:1rem;">
+          <strong>Estimaciones por conciliar:</strong> {esc(discrepancia)}</div>"""
+        if discrepancia else ""
+    )
+
+    return f"""
+    <section class="section" id="resultados-preliminares">
+      <div style="display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:0.4rem;">
+        <span class="badge badge-warn">Resultado preliminar</span>
+        <span class="badge badge-country">Corte: {esc(format_spanish_date(data.get('fecha_corte'), 'por confirmar'))}</span>
+      </div>
+      <h2>{esc(data.get('titulo'), 'Resultados preliminares')}</h2>
+      <p>{esc(data.get('introduccion'), '')}</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:0.8rem;margin:1rem 0;">
+        {kpis}
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:0.45rem;">{"".join(descargas)}</div>
+      {discrepancia_html}
+
+      <h3 style="margin-top:1.6rem;">Capas publicadas (agregadas a 250 m)</h3>
+      <p style="font-size:0.88rem;color:var(--c-text-muted);">GeoJSON en EPSG:4326. Las capas por predio se usan solo como activos privados en Google Earth Engine y no se publican.</p>
+      <div class="grid-3">{"".join(capas_cards)}</div>
+
+      <h3 style="margin-top:1.6rem;">Scripts y reproducibilidad</h3>
+      <ul>{"".join(scripts_li)}</ul>
+    </section>
+    """
+
+
 def build_resultados_page(
     ctx: SiteContext,
     manifest: dict[str, Any],
@@ -1802,7 +1893,7 @@ def build_resultados_page(
                 fig_cards.append(
                     f"""
                     <article class="card">
-                      <span class="badge badge-ok">Evidencia gráfica del repositorio</span>
+                      <span class="badge badge-warn">Resultado preliminar</span>
                       <h3 style="margin:0.35rem 0 0.5rem;font-size:1rem;">{f_label}</h3>
                       <a href="{f_url}" target="_blank" rel="noopener noreferrer" style="display:block;border:1px solid var(--c-border);border-radius:8px;overflow:hidden;background:#070A14;">
                         <img src="{f_url}" alt="{f_label}" style="width:100%;height:auto;display:block;" loading="lazy">
@@ -1812,8 +1903,8 @@ def build_resultados_page(
                 )
             figuras_html = f"""
             <section class="section">
-              <h2>Figuras y visualizaciones analíticas incorporadas por el equipo</h2>
-              <p>Gráficos y salidas analíticas generadas a partir de los scripts del proyecto en <code>src/</code> y almacenadas en <code>web/assets/img/figuras/</code>:</p>
+              <h2>Figuras de resultados preliminares</h2>
+              <p>Gráficos generados con <code>src/figuras_resultados.py</code> a partir de las capas agregadas publicadas en <code>geovisor/capas/</code> y almacenados en <code>web/assets/img/figuras/</code>:</p>
               <div class="grid-2">{"".join(fig_cards)}</div>
             </section>
             """
@@ -1825,8 +1916,8 @@ def build_resultados_page(
           <span class="badge badge-lime">Evidencias y Atlas Urbano Regional</span>
           <span class="badge badge-country">{esc(manifest['id'])}</span>
         </div>
-        <h1>Resultados disponibles, productos esperados y aporte al Atlas</h1>
-        <p class="hero-lead">Separación explícita entre insumos/evidencias documentales existentes y productos comprometidos como meta del PMV en {esc(manifest['territory']['label'])}.</p>
+        <h1>Resultados preliminares, productos y aporte al Atlas</h1>
+        <p class="hero-lead">Brecha catastral, tipología A–E y temporalidad de lo construido en el Distrito Central (Tegucigalpa y Comayagüela), con capas agregadas a 250 m, atlas, presentación y scripts reproducibles. Resultados preliminares, sujetos a revisión técnica y validación de campo.</p>
       </div>
     </section>
     """
@@ -1844,6 +1935,8 @@ def build_resultados_page(
 
     body = f"""
     {render_status_strip(manifest)}
+
+    {render_resultados_preliminares_section(ctx, manifest['id'])}
 
     {atlas_copernicus_section}
 

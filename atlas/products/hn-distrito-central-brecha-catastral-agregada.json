@@ -5,7 +5,7 @@
   "title": "Indicadores agregados de brecha catastral, huella construida y tipología urbana en el Distrito Central",
   "summary": "Contribución prevista compatible con el Atlas Municipal del MDC y el Atlas Urbano de la UNAH, con indicadores agregados por colonia o celda de 250 m entre ciudad construida observada y cobertura catastral.",
   "product_type": "indicador",
-  "publication_status": "propuesto",
+  "publication_status": "en_preparacion",
   "coverage": {
     "label": "Zona piloto: toda la mancha urbana consolidada del Municipio del Distrito Central, es decir, Tegucigalpa y Comayagüela.\nEl polígono de la mancha urbana se genera con el script (GHSL y Dynamic World) y se homologa con el perímetro urbano delimitado por la AMDC.",
     "geometry_url": null,
@@ -171,7 +171,7 @@
     "institution": "Alcaldía Municipal del Distrito Central (AMDC) / UNAH / SEGOB",
     "maintainer": null,
     "update_frequency": null,
-    "content_updated_at": null
+    "content_updated_at": "2026-11-12"
   },
   "provenance": {
     "sources": [
