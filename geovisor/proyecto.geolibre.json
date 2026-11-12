@@ -253,6 +253,28 @@
       }
     },
     {
+      "id": "hn-mdc-colonias-prioritarias",
+      "name": "Colonias prioritarias para reducir la brecha catastral (nota técnica, prioridades 1 a 3)",
+      "type": "geojson",
+      "source": {
+        "type": "url",
+        "url": "https://copernicuscentroamerica.github.io/urbano-hn-distrito-central/geovisor/capas/mdc_colonias_prioritarias.geojson"
+      },
+      "visible": true,
+      "style": {
+        "fillColor": "#b2182b",
+        "strokeColor": "#67000d",
+        "strokeWidth": 0.6,
+        "fillOpacity": 0.7,
+        "vectorStyleMode": "single"
+      },
+      "metadata": {
+        "group": "3 · Brecha: catastrado vs. construido",
+        "status": "publicado",
+        "resolution": "186 colonias AMDC (22 de prioridad 1, 41 de prioridad 2, 123 de prioridad 3); EPSG:4326"
+      }
+    },
+    {
       "id": "hn-mdc-grilla-aparicion-250m",
       "name": "Grilla completa de 250 m y aparición estimada de huella construida (2017–2026)",
       "type": "geojson",
@@ -386,6 +408,13 @@
       "fillColor": "#f4d35e",
       "strokeColor": "#ffb703",
       "strokeWidth": 0.5,
+      "fillOpacity": 0.7,
+      "vectorStyleMode": "single"
+    },
+    "hn-mdc-colonias-prioritarias": {
+      "fillColor": "#b2182b",
+      "strokeColor": "#67000d",
+      "strokeWidth": 0.6,
       "fillOpacity": 0.7,
       "vectorStyleMode": "single"
     }
