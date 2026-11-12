@@ -1,16 +1,5 @@
-## Limitaciones, discrepancias e información pendiente para continuidad
+## Próximos pasos para la gestión municipal y réplica nacional
 
-- La revisión S24 sustituye el antiguo alcance del centro histórico por toda la mancha urbana consolidada; 716,1 ha y su centroide son referencias preliminares, no área ni centro vigente.
-- El acceso al parcelario con fecha por predio requiere condiciones de uso formalizadas.
-- La ausencia de correspondencia con catastro no prueba por sí misma informalidad, incumplimiento o deuda tributaria.
-- Los datos a nivel de predio/edificación son de uso interno/institucional; la propuesta pública utiliza indicadores agregados.
-- La tipología A–E es metodológica; pendiente ≥30 % u otra regla no basta para declarar riesgo sin contexto y validación.
-- La ficha menciona ejemplos Juticalpa o San Pedro Sula para la réplica; no existe un segundo municipio comprometido en el paquete.
-
-### Información pendiente
-
-- Límite municipal homologado. El perímetro urbano PU 2025 y las colonias de la AMDC ya se incorporaron (noviembre de 2026); falta confirmar con la AMDC su vigencia oficial.
-- Acuerdo de acceso y uso del parcelario y fecha de actualización por predio.
-- Inventario actualizado de asentamientos, zonas de amenaza y muestras de verificación.
-- Método de homologación de edificios y catastro y parámetros de tipología.
-- Segundo municipio para prueba y responsables de actualización.
+1. **Programación de barridos catastrales selectivos** de la AMDC en las 91 celdas con brecha >= 50% y en los corredores de crecimiento 2022–2025 (194 celdas).
+2. **Cruce vinculante con susceptibilidad a deslizamientos** en las 162 celdas de Tipología E para distinguir zonas aptas para regularización de aquellas sujetas a mitigación o reubicación preventiva.
+3. **Transferencia del flujo parametrizado** a municipios intermedios a través de SEGOB y el Atlas Urbano de la UNAH.

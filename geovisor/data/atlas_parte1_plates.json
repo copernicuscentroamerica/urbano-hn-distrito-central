@@ -1,0 +1,192 @@
+[
+  {
+    "key": "proj-p1",
+    "number": "LÁMINA P1",
+    "shortTitle": "P1 · Planimetría AMDC",
+    "title": "Planimetría Oficial Catastrada AMDC (Perímetro PU 2025, Sectores y Zonas de Riesgo)",
+    "sensor": "Alcaldía Municipal del Distrito Central (AMDC) — Planimetría oficial",
+    "formula": "Cobertura_Oficial = Perimetro_PU_2025 + Sectores_Catastrales + 15,022_Manzanas",
+    "reading": "Representa el ámbito urbano formalmente administrado por el catastro municipal e identifica los polígonos declarados inhabitables o de alto riesgo.",
+    "imageRel": "assets/img/atlas_proyecto/lamina_p1.png",
+    "coords": [
+      [
+        -87.294198,
+        14.185187
+      ],
+      [
+        -87.097676,
+        14.185187
+      ],
+      [
+        -87.097676,
+        13.952588
+      ],
+      [
+        -87.294198,
+        13.952588
+      ]
+    ],
+    "swatches": [
+      {
+        "color": "#1E3A8A",
+        "label": "Sectores Catastrales AMDC",
+        "desc": "Organización territorial dentro del PU 2025"
+      },
+      {
+        "color": "#93C5FD",
+        "label": "Límites de Sector",
+        "desc": "Estructura operativa de actualización"
+      },
+      {
+        "color": "#F43F5E",
+        "label": "Zonas de Riesgo / Inhabitables",
+        "desc": "Polígonos con restricción normativa AMDC"
+      }
+    ]
+  },
+  {
+    "key": "proj-p2",
+    "number": "LÁMINA P2",
+    "shortTitle": "P2 · Aparición 2017–2025",
+    "title": "Año Estimado de Consolidación y Crecimiento Reciente (2017–2025) en Malla de 250 m",
+    "sensor": "Copernicus Sentinel-2 / Dynamic World V1 + Google Open Buildings 2.5D Temporal",
+    "formula": "Cohorte_250m = Periodo_Aparicion( Consolidada_2017 | 2018_2021 | 2022_2025 )",
+    "reading": "Localiza las 194 celdas de expansión reciente (2022–2025) y las 576 celdas del periodo 2018–2021 en los bordes periféricos del Distrito Central.",
+    "imageRel": "assets/img/atlas_proyecto/lamina_p2.png",
+    "coords": [
+      [
+        -87.294198,
+        14.185187
+      ],
+      [
+        -87.097676,
+        14.185187
+      ],
+      [
+        -87.097676,
+        13.952588
+      ],
+      [
+        -87.294198,
+        13.952588
+      ]
+    ],
+    "swatches": [
+      {
+        "color": "#38BDF8",
+        "label": "Consolidada a 2017",
+        "desc": "2,164 celdas · Núcleo histórico y metropolitano"
+      },
+      {
+        "color": "#FACC15",
+        "label": "Crecimiento 2018–2021",
+        "desc": "576 celdas · Expansión intermedia"
+      },
+      {
+        "color": "#EF4444",
+        "label": "Crecimiento 2022–2025",
+        "desc": "194 celdas · Frentes activos recientes"
+      }
+    ]
+  },
+  {
+    "key": "proj-p3",
+    "number": "LÁMINA P3",
+    "shortTitle": "P3 · Brecha Catastral",
+    "title": "Brecha Física Catastral: Proporción Edificada Fuera de Registro en Celdas de 250 m",
+    "sensor": "Open Buildings v3 / 2.5D × Planimetría AMDC en Google Earth Engine",
+    "formula": "p_fuera_catastro = m2_construidos_fuera_de_catastro / m2_construidos_totales",
+    "reading": "Identifica con exactitud las 91 celdas críticas donde al menos el 50% de lo construido carece de cobertura catastral, optimizando el despliegue de brigadas de la AMDC.",
+    "imageRel": "assets/img/atlas_proyecto/lamina_p3.png",
+    "coords": [
+      [
+        -87.294198,
+        14.185187
+      ],
+      [
+        -87.097676,
+        14.185187
+      ],
+      [
+        -87.097676,
+        13.952588
+      ],
+      [
+        -87.294198,
+        13.952588
+      ]
+    ],
+    "swatches": [
+      {
+        "color": "#991B1B",
+        "label": "Brecha Crítica (>= 50%)",
+        "desc": "91 celdas prioritarias para barrido catastral"
+      },
+      {
+        "color": "#EF4444",
+        "label": "Brecha Alta (20% – <50%)",
+        "desc": "Bordes periurbanos con rezago significativo"
+      },
+      {
+        "color": "#FDBA74",
+        "label": "Brecha Moderada (5% – <20%)",
+        "desc": "Zonas mixtas con ampliaciones no registradas"
+      },
+      {
+        "color": "#DBEAFE",
+        "label": "Brecha Baja (< 5%)",
+        "desc": "Tejido consolidado cubierto por catastro"
+      }
+    ]
+  },
+  {
+    "key": "proj-p4",
+    "number": "LÁMINA P4",
+    "shortTitle": "P4 · Tipologías A–E",
+    "title": "Tipologías Morfológicas de Asentamientos (A–E) para Priorización Integral",
+    "sensor": "Modelo multivariado AMDC–UNAH–SEGOB (src/gee/tipologia_ae.py)",
+    "formula": "Tipo_AE = Clasificador( p_fuera_catastro, Pendiente_GLO30, Densidad, Cohorte )",
+    "reading": "Separa los frentes aptos para incorporación catastral directa (Tipología B: 307 celdas) de las ocupaciones recientes en laderas fuertes (Tipología E: 162 celdas) que requieren evaluación previa de riesgo.",
+    "imageRel": "assets/img/atlas_proyecto/lamina_p4.png",
+    "coords": [
+      [
+        -87.294198,
+        14.185187
+      ],
+      [
+        -87.097676,
+        14.185187
+      ],
+      [
+        -87.097676,
+        13.952588
+      ],
+      [
+        -87.294198,
+        13.952588
+      ]
+    ],
+    "swatches": [
+      {
+        "color": "#2563EB",
+        "label": "Tipología A (2,720 celdas)",
+        "desc": "Consolidado catastrado (83.9%)"
+      },
+      {
+        "color": "#F59E0B",
+        "label": "Tipología B (307 celdas)",
+        "desc": "Expansión periférica regularizable (9.5%)"
+      },
+      {
+        "color": "#DC2626",
+        "label": "Tipología E (162 celdas)",
+        "desc": "Ocupación en ladera + brecha crítica (5.0%)"
+      },
+      {
+        "color": "#0D9488",
+        "label": "Tipologías C y D (52 celdas)",
+        "desc": "Bordes mixtos y periurbano disperso (1.6%)"
+      }
+    ]
+  }
+]
