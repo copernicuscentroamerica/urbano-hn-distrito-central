@@ -155,14 +155,14 @@
       "status": "publicado",
       "source_path": "geovisor/capas/mdc_manzanas.geojson",
       "expected_file_hint": "geovisor/capas/mdc_manzanas.geojson",
-      "resolution": "Vectorial — 15,022 manzanas (EPSG:4326)",
+      "resolution": "Vectorial — 15.301 polígonos de manzana (EPSG:4326)",
       "style": {
         "fill_color": "#abd9e9",
         "fill_opacity": 0.3,
         "stroke_color": "#2c7bb6",
         "stroke_width": 0.5
       },
-      "caveat": "Fuente: planimetría oficial AMDC (noviembre 2026). Linderos de manzana de todos los sectores urbanos y rurales disponibles. Se excluyeron los registros con geometría lineal (no poligonal).",
+      "caveat": "Fuente: planimetría oficial AMDC (noviembre 2026). Linderos de manzana de todos los sectores urbanos y rurales disponibles, incluidos los sectores 12, 30 y 33 (incorporados el 12 de noviembre de 2026). Se excluyeron los registros con geometría lineal o vacía.",
       "visible": false,
       "legend_title": "Manzanas catastrales"
     },
