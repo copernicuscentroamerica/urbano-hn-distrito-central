@@ -404,6 +404,56 @@
       }
     },
     {
+      "id": "hn-mdc-colonias-prioritarias",
+      "title": "Colonias prioritarias para reducir la brecha catastral (nota técnica, prioridades 1 a 3)",
+      "group": "3 · Brecha: catastrado vs. construido",
+      "format": "geojson",
+      "geometry_type": "polygon",
+      "status": "publicado",
+      "source_path": "geovisor/capas/mdc_colonias_prioritarias.geojson",
+      "expected_file_hint": "geovisor/capas/mdc_colonias_prioritarias.geojson",
+      "resolution": "186 colonias AMDC (22 de prioridad 1, 41 de prioridad 2, 123 de prioridad 3); EPSG:4326",
+      "style": {
+        "fill_color": [
+          "match",
+          [
+            "get",
+            "prioridad"
+          ],
+          1,
+          "#b2182b",
+          2,
+          "#ef8a62",
+          3,
+          "#fddbc7",
+          "#cccccc"
+        ],
+        "fill_opacity": 0.7,
+        "stroke_color": "#67000d",
+        "stroke_width": 0.6
+      },
+      "caveat": "Priorización de la nota técnica para la Gerencia de Catastro (noviembre de 2026). Prioridad 1: ≥ 150 edificaciones fuera de predio, o ≥ 75 con ≥ 40 % fuera; prioridad 2: 75–149, o ≥ 30 con ≥ 40 %; prioridad 3: 30–74. Cifras estimadas por colonia a partir de celdas de 250 m (reparto por área); preliminares y sujetas a validación en campo. La ausencia de predio no prueba informalidad. El campo n_mapa es el número de la colonia en el Mapa 2 y la tabla de prioridad 1.",
+      "visible": false,
+      "legend": {
+        "title": "Colonias prioritarias (edificaciones fuera de predio)",
+        "classes": [
+          [
+            "Prioridad 1 (22 colonias)",
+            "#b2182b"
+          ],
+          [
+            "Prioridad 2 (41 colonias)",
+            "#ef8a62"
+          ],
+          [
+            "Prioridad 3 (123 colonias)",
+            "#fddbc7"
+          ]
+        ],
+        "note": "Preliminar. Atributos: sector, estatus, alertas y acción sugerida por colonia."
+      }
+    },
+    {
       "id": "hn-mdc-grilla-aparicion-250m",
       "title": "Grilla completa de 250 m y aparición estimada de huella construida (2017–2026)",
       "group": "2 · Lo construido (satélite)",
