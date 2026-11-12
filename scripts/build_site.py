@@ -2147,6 +2147,12 @@ def localize_project_url(ctx: SiteContext, pid: str, raw_url: str | None) -> str
         return ctx.site_url(rel)
     return raw_url
 
+def optional_download(ctx: SiteContext, fname: str) -> tuple[str, str]:
+    """Devuelve (nombre, href escapado) si el archivo existe en web/assets/descargas/; si no, href vacío."""
+    if (ROOT / "web" / "assets" / "descargas" / fname).is_file():
+        return fname, html.escape(ctx.site_url(f"assets/descargas/{fname}"), quote=True)
+    return fname, ""
+
 
 def build_resultados_page(
     ctx: SiteContext,
@@ -2198,6 +2204,8 @@ def build_resultados_page(
     pdf_href = html.escape(ctx.site_url(f"assets/descargas/atlas_copernicus_hn-distrito-central.pdf"), quote=True)
     docx_href = html.escape(ctx.site_url(f"assets/descargas/{SPEC['docx_file']}"), quote=True)
     colaborar_logos_href = ctx.site_url("colaborar/") + "#anadir-actualizar-logos"
+    nota_file, nota_href = optional_download(ctx, f"nota_tecnica_colonias_prioritarias_{pid}.pdf")
+    pres_file, pres_href = optional_download(ctx, f"presentacion_avance_{pid}.pdf")
 
     hero = f"""
     <section class="hero hero-compact">
@@ -2213,12 +2221,32 @@ def build_resultados_page(
           <a class="btn btn-teal" href="{gv_href}">🧭 Abrir Geovisor Interactivo →</a>
           <a class="btn btn-outline-light" href="{sub_href}">📊 {esc(sub_nav)} →</a>
           <a class="btn btn-outline-light" href="{docx_href}" download="{esc(SPEC['docx_file'])}">📥 Metodología (.docx)</a>
+          {f'<a class="btn btn-outline-light" href="{nota_href}" download="{esc(nota_file)}">📄 Nota técnica: colonias prioritarias (PDF)</a>' if nota_href else ''}
         </div>
       </div>
     </section>
     """
 
+    nota_section = ""
+    if nota_href:
+        pres_btn = f'<a class="btn btn-outline btn-xs" href="{pres_href}" download="{esc(pres_file)}">📊 Presentación del avance (PDF)</a>' if pres_href else ""
+        nota_section = f"""
+    <section class="section" id="nota-tecnica-catastro">
+      <article class="card" style="border-top:4px solid var(--c-accent-yellow);">
+        <span class="badge badge-warn">Resultado preliminar · noviembre de 2026</span>
+        <h2 style="margin:0.35rem 0 0.4rem;">Colonias prioritarias para reducir la brecha catastral</h2>
+        <p>Nota técnica dirigida a la Gerencia de Catastro de la AMDC. Prioriza 186 colonias (22 de prioridad 1) según las edificaciones fuera de predio catastrado, indica su sector catastral y su estatus según el análisis, e incluye mapas de ubicación y la acción sugerida por colonia. Las cifras son agregados por colonia, estimados a partir de celdas de 250 m, y requieren validación en campo.</p>
+        <div class="card-footer">
+          <a class="btn btn-primary btn-xs" href="{nota_href}" download="{esc(nota_file)}">📄 Descargar nota técnica (PDF)</a>
+          {pres_btn}
+        </div>
+      </article>
+    </section>
+    """
+
     body = f"""
+    {nota_section}
+
     {render_copernicus_study_area_atlas_section(manifest['territory']['label'], center, zoom, ctx, pid)}
 
     <section class="section">
@@ -2278,6 +2306,14 @@ python scripts/validate.py --site site"""
     script_href = html.escape(ctx.site_url(f"assets/descargas/{SPEC['script_file']}"), quote=True)
     csv_href = html.escape(ctx.site_url(f"assets/descargas/{SPEC['csv_file']}"), quote=True)
     geolibre_href = html.escape(ctx.site_url("geovisor/proyecto.geolibre.json"), quote=True)
+    extra_rows = ""
+    for fname, label, desc in (
+        (f"nota_tecnica_colonias_prioritarias_{pid}.pdf", "Nota técnica: colonias prioritarias", "Priorización preliminar de colonias para la Gerencia de Catastro AMDC: sector, estatus, mapas y acción sugerida."),
+        (f"presentacion_avance_{pid}.pdf", "Presentación del avance", "Proyecto, método, productos, limitaciones y utilidad (21 diapositivas)."),
+    ):
+        _, href = optional_download(ctx, fname)
+        if href:
+            extra_rows += f'<tr><td><strong>{esc(label)}</strong></td><td><code>PDF</code></td><td>{esc(desc)}</td><td><a class="btn btn-primary btn-xs" href="{href}" download="{esc(fname)}">📥 Descargar PDF</a></td></tr>'
 
     hero = f"""
     <section class="hero">
@@ -2318,6 +2354,7 @@ python scripts/validate.py --site site"""
                 <td>Arquitectura metodológica, formulación matemática, interpretación de resultados y mejoras Fase II.</td>
                 <td><a class="btn btn-teal btn-xs" href="{docx_href}" download="{esc(SPEC['docx_file'])}">📥 Descargar .docx</a></td>
               </tr>
+              {extra_rows}
               <tr>
                 <td><strong>Script de Procesamiento Espacial</strong></td>
                 <td><code>{esc(Path(SPEC['script_file']).suffix)}</code></td>
