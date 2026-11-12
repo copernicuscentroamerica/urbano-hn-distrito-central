@@ -1,0 +1,50 @@
+{
+  "titulo": "Resultados preliminares del análisis",
+  "fecha_corte": "2026-11-12",
+  "estado": "preliminar",
+  "introduccion": "Primera corrida completa del flujo en Google Earth Engine sobre el perímetro urbano PU 2025 de la AMDC (24.431 ha). Lo construido se observa con Open Buildings v3, Dynamic World y GHSL; lo catastrado proviene del parcelario AMDC 2026, usado solo como insumo interno. Todo se publica agregado en celdas de 250 m: no se publican datos por predio. Las cifras son preliminares y están sujetas a revisión técnica y validación de campo.",
+  "indicadores": [
+    {"valor": "369.369", "etiqueta": "edificaciones analizadas", "detalle": "Open Buildings v3 dentro del perímetro urbano PU 2025"},
+    {"valor": "6,6 %", "etiqueta": "fuera de predio catastrado", "detalle": "24.538 edificaciones; 7,3 % del área construida"},
+    {"valor": "5.384", "etiqueta": "edificaciones en celdas con brecha", "detalle": "Celdas de 250 m con ≥ 50 % de lo construido fuera de predio"},
+    {"valor": "213", "etiqueta": "celdas C + D + E", "detalle": "Prioridad preliminar para validación en campo (tipología A–E)"},
+    {"valor": "27.107", "etiqueta": "edificaciones en tipología E", "detalle": "Brecha en condición crítica: pendiente ≥ 30 % o zona de riesgo AMDC"},
+    {"valor": "≈ 1.567 ha", "etiqueta": "de nueva huella 2018–2025", "detalle": "Dynamic World, línea base 2017 calibrada en el centro histórico (≈ 1,4 % anual)"}
+  ],
+  "capas": [
+    {
+      "titulo": "Brecha catastral agregada",
+      "descripcion": "Porcentaje de lo construido fuera de predio catastrado por celda de 250 m, con número de edificaciones, densidad y área construida.",
+      "archivo": "geovisor/capas/mdc_brecha_agregada.geojson"
+    },
+    {
+      "titulo": "Tipología preliminar A–E",
+      "descripcion": "Clasificación metodológica que combina brecha, ocupación reciente y condición crítica (pendiente ≥ 30 % o zona de riesgo).",
+      "archivo": "geovisor/capas/mdc_tipologias_ae.geojson"
+    },
+    {
+      "titulo": "Ciudad construida y año estimado de consolidación",
+      "descripcion": "Periodo de consolidación por celda (a 2017, 2018–2021, 2022–2025) y concordancia entre Dynamic World y Open Buildings 2.5D Temporal.",
+      "archivo": "geovisor/capas/mdc_huella_multitemporal.geojson"
+    },
+    {
+      "titulo": "Mancha urbana consolidada (GHSL 2020)",
+      "descripcion": "Huella construida GHSL 2020: 15.204 ha en 51 núcleos, usada como referencia frente al perímetro urbano oficial.",
+      "archivo": "geovisor/capas/mdc_mancha_urbana.geojson"
+    },
+    {
+      "titulo": "Grilla de aparición estimada (equipo Clúster)",
+      "descripcion": "Capa complementaria aportada al repositorio: aparición estimada de huella construida 2017–2026 en la grilla completa de 250 m.",
+      "archivo": "geovisor/capas/mdc_grilla_aparicion_250m.geojson"
+    }
+  ],
+  "scripts": [
+    {"titulo": "Brecha catastral (GEE, JavaScript)", "ruta": "src/gee/brecha_catastral_mdc.js"},
+    {"titulo": "Temporalidad de lo construido (GEE, JavaScript)", "ruta": "src/gee/temporalidad_mdc.js"},
+    {"titulo": "Unión de celdas exportadas (Python)", "ruta": "src/gee/unir_celdas.py"},
+    {"titulo": "Tipología A–E (Python)", "ruta": "src/gee/tipologia_ae.py"},
+    {"titulo": "Calibración temporal y periodos (Python)", "ruta": "src/gee/temporalidad_celdas.py"},
+    {"titulo": "Cuaderno reproducible", "ruta": "notebooks/brecha_catastral_distrito_central.ipynb"}
+  ],
+  "discrepancia": "Las dos estimaciones de crecimiento reciente del repositorio aún no se concilian: la grilla de aparición estima ≈ 142 ha entre 2017 y 2026, mientras que la capa de consolidación con Dynamic World estima ≈ 1.567 ha entre 2018 y 2025. Difieren en fuente, umbral y criterio de aparición; la conciliación está pendiente con el equipo."
+}

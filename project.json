@@ -167,7 +167,7 @@
         "pointer": "/status",
         "status": "por_confirmar",
         "source_ids": [],
-        "note": "El paquete conserva evidencia documental, pero no acredita el estado operativo actual."
+        "note": "Desarrollo en curso: scripts ejecutados en Google Earth Engine (src/gee/) y capas agregadas preliminares publicadas en geovisor/capas/ (noviembre de 2026). Demostración, revisión técnica, validación institucional y adopción siguen sin evidencia registrada."
       },
       {
         "pointer": "/data_sources",
@@ -199,7 +199,7 @@
         "source_ids": [
           "S24"
         ],
-        "note": "Actualización metodológica y de equipo técnico registrada durante la jornada de trabajo del 10 de noviembre de 2026."
+        "note": "Actualización metodológica y de equipo técnico registrada durante la jornada de trabajo del 10 de noviembre de 2026; resultados preliminares actualizados el 12 de noviembre de 2026."
       },
       {
         "pointer": "/team",
