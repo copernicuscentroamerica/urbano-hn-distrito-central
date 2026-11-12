@@ -279,6 +279,7 @@ def render_shell(
         ("inicio", "Inicio", ctx.site_url("")),
         ("proyecto", "Proyecto", ctx.site_url("proyecto/")),
         ("aplicacion", "Geovisor (GeoLibre)", ctx.site_url("aplicacion/")),
+        ("tablero", "Tablero", ctx.site_url("tablero/")),
         (sub_slug, sub_nav, ctx.site_url(f"{sub_slug}/")),
         ("metodologia", "Metodología", ctx.site_url("metodologia/")),
         ("resultados", "Atlas y Resultados", ctx.site_url("resultados/")),
@@ -1126,6 +1127,7 @@ def build_aplicacion_page(
         <div class="hero-actions" style="margin-top:0.65rem;">
           <a class="btn btn-primary" href="{sub_href}">📊 {esc(sub_nav)}: Metodología y Resultados →</a>
           <a class="btn btn-teal" href="{atlas_href}">🗺️ Abrir Atlas Interactivo →</a>
+          <a class="btn btn-teal" href="{html.escape(ctx.site_url('tablero/'), quote=True)}">📊 Tablero interactivo →</a>
           <a class="btn btn-outline-light" href="{atlas_pdf_href}" download="Atlas_Copernicus_{esc(pid)}.pdf">📥 Atlas PDF ({atlas_pages} Págs.)</a>
           <a class="btn btn-outline-light" href="{docx_dl_href}" download="{esc(SPEC['docx_file'])}">📥 Metodología (.docx)</a>
           <a class="btn btn-outline-light" href="{script_dl_href}" download="{esc(SPEC['script_file'])}">📜 Script</a>
@@ -2412,6 +2414,100 @@ python scripts/validate.py --site site"""
     )
 
 
+def build_tablero_page(ctx: SiteContext, manifest: dict[str, Any], repo_cfg: dict[str, Any], branding: dict[str, Any]) -> str:
+    """Tablero interactivo de brecha catastral por colonia (agregados por colonia y sector)."""
+    pid = manifest["id"]
+    gv_href = html.escape(ctx.site_url("aplicacion/"), quote=True)
+    nota_file, nota_href = optional_download(ctx, f"nota_tecnica_colonias_prioritarias_{pid}.pdf")
+    hero = f"""
+    <section class="hero hero-compact">
+      <div class="container">
+        <div class="hero-eyebrow">
+          <span class="badge badge-lime">Tablero interactivo</span>
+          <span class="badge badge-country">{esc(pid)} · resultados preliminares</span>
+        </div>
+        <h1>Tablero de brecha catastral por colonia</h1>
+        <p class="hero-lead">Filtra por sector catastral, prioridad, estatus y alertas: los indicadores, los gráficos, el mapa y la tabla se actualizan juntos. Haz clic en una barra de sector para filtrar o en una colonia para ver su ficha.</p>
+        <div class="hero-actions">
+          <a class="btn btn-teal" href="{gv_href}">🧭 Abrir el geovisor completo →</a>
+          {f'<a class="btn btn-outline-light" href="{nota_href}" download="{esc(nota_file)}">📄 Nota técnica (PDF)</a>' if nota_href else ''}
+        </div>
+      </div>
+    </section>
+    """
+    est_opts = "".join(
+        f'<label class="tb-check"><input type="checkbox" data-est="{esc(e)}" checked> {esc(e)}</label>'
+        for e in ("Brecha predominante", "Rezago alto", "Rezago moderado", "Rezago bajo")
+    )
+    prio_opts = "".join(
+        f'<label class="tb-check"><input type="checkbox" data-prio="{k}" checked> <span class="tb-dot" style="background:{c}"></span>{esc(l)}</label>'
+        for k, l, c in ((1, "Prioridad 1", "#b2182b"), (2, "Prioridad 2", "#ef8a62"), (3, "Prioridad 3", "#fddbc7"), (4, "Seguimiento", "#d9dde3"))
+    )
+    body = f"""
+    <section class="section tb-wrap" aria-label="Tablero interactivo">
+      <p id="tb-loading" class="tb-empty">Cargando datos del tablero…</p>
+      <div class="tb-filters card">
+        <div class="tb-fgroup">
+          <label for="tb-f-sector" class="tb-flabel">Sector catastral <span>(Ctrl/Cmd para varios)</span></label>
+          <select id="tb-f-sector" multiple size="5"></select>
+        </div>
+        <div class="tb-fgroup"><span class="tb-flabel">Prioridad</span>{prio_opts}
+          <button type="button" id="tb-only-prio" class="btn btn-outline btn-xs">Solo prioridades 1–3</button></div>
+        <div class="tb-fgroup"><span class="tb-flabel">Estatus</span>{est_opts}</div>
+        <div class="tb-fgroup"><span class="tb-flabel">Alertas</span>
+          <label class="tb-check"><input type="checkbox" id="tb-f-critica"> Condición crítica</label>
+          <label class="tb-check"><input type="checkbox" id="tb-f-reciente"> Crecimiento reciente</label>
+          <label for="tb-f-q" class="tb-flabel" style="margin-top:0.5rem;">Buscar colonia o código</label>
+          <input type="search" id="tb-f-q" placeholder="p. ej. Villa Nueva">
+          <button type="button" id="tb-reset" class="btn btn-primary btn-xs" style="margin-top:0.5rem;">Restablecer filtros</button>
+        </div>
+      </div>
+
+      <div class="tb-kpis">
+        <div class="tb-kpi"><span class="tb-kv" id="tb-kpi-colonias">—</span><span class="tb-kl">colonias</span></div>
+        <div class="tb-kpi"><span class="tb-kv" id="tb-kpi-edif">—</span><span class="tb-kl">edificaciones en colonias (≈)</span></div>
+        <div class="tb-kpi"><span class="tb-kv tb-red" id="tb-kpi-fuera">—</span><span class="tb-kl">fuera de predio catastrado (≈)</span></div>
+        <div class="tb-kpi"><span class="tb-kv tb-red" id="tb-kpi-pct">—</span><span class="tb-kl">de lo construido fuera de predio</span></div>
+        <div class="tb-kpi"><span class="tb-kv tb-small" id="tb-kpi-prio">—</span><span class="tb-kl" id="tb-kpi-scope">Sectores: todos</span></div>
+      </div>
+
+      <p id="tb-sincol" class="tb-note" style="margin-top:-0.4rem;"></p>
+
+      <div class="tb-grid">
+        <div class="card tb-mapcard"><div id="tb-map" role="region" aria-label="Mapa de colonias filtradas"></div>
+          <div class="tb-legend"><span><span class="tb-dot" style="background:#b2182b"></span>Prioridad 1</span><span><span class="tb-dot" style="background:#ef8a62"></span>Prioridad 2</span><span><span class="tb-dot" style="background:#fddbc7"></span>Prioridad 3</span><span><span class="tb-dot" style="background:#d9dde3"></span>Seguimiento</span></div>
+        </div>
+        <div class="tb-charts">
+          <div class="card"><h3 class="tb-h">Edificaciones fuera de predio por sector <span>(15 mayores · clic para filtrar)</span></h3><div id="tb-chart-sector" class="tb-chart"></div></div>
+          <div class="card"><h3 class="tb-h">Celdas de 250 m por tipología A–E <span>(sectores elegidos)</span></h3><div id="tb-chart-tipo" class="tb-chart"></div></div>
+          <div class="card"><h3 class="tb-h">Nueva huella construida por año (ha) <span id="tb-anio-total"></span></h3><div id="tb-chart-anio" class="tb-chart"></div></div>
+        </div>
+      </div>
+
+      <div class="card tb-tablecard">
+        <div class="tb-tablebar"><h3 class="tb-h" style="margin:0;">Colonias</h3><span id="tb-table-count" class="tb-kl"></span>
+          <button type="button" id="tb-csv" class="btn btn-teal btn-xs">📥 Descargar CSV (filtro actual)</button></div>
+        <div class="table-wrap tb-tablewrap"><table id="tb-table"></table></div>
+        <button type="button" id="tb-more" class="btn btn-outline btn-xs" hidden>Mostrar más colonias</button>
+      </div>
+
+      <p class="tb-note">Resultados preliminares. Las cifras por colonia se estiman repartiendo los resultados de celdas de 250 m según su área dentro de cada colonia; requieren validación en campo. Los gráficos de tipología y de crecimiento responden solo al filtro de sector. La ausencia de predio no prueba por sí misma informalidad. No se publican datos por predio.</p>
+    </section>
+
+    {render_project_institutions_band(ctx, branding, manifest)}
+    """
+    return render_shell(
+        ctx=ctx,
+        manifest=manifest,
+        repo_cfg=repo_cfg,
+        page_title="Tablero de brecha catastral",
+        active_nav="tablero",
+        hero_html=hero,
+        body_html=body,
+        page_script="assets/js/tablero.js",
+    )
+
+
 def build_404_page(ctx: SiteContext, manifest: dict[str, Any], repo_cfg: dict[str, Any]) -> str:
     hero = f"""
     <section class="hero">
@@ -2625,6 +2721,7 @@ def main() -> int:
     write_deterministic(out_dir / "index.html", build_home_page(ctx, manifest, repo_cfg, layers_cfg, branding))
     write_deterministic(out_dir / "proyecto" / "index.html", build_proyecto_page(ctx, manifest, repo_cfg, project_md, pmv_md, branding))
     write_deterministic(out_dir / "aplicacion" / "index.html", build_aplicacion_page(ctx, manifest, repo_cfg, layers_cfg, branding))
+    write_deterministic(out_dir / "tablero" / "index.html", build_tablero_page(ctx, manifest, repo_cfg, branding))
     write_deterministic(out_dir / sub_slug / "index.html", build_subpagina_page(ctx, manifest, repo_cfg, layers_cfg, branding, clases_cmp))
     write_deterministic(out_dir / "metodologia" / "index.html", build_metodologia_page(ctx, manifest, repo_cfg, metodologia_md, branding))
     write_deterministic(out_dir / "resultados" / "index.html", build_resultados_page(ctx, manifest, repo_cfg, atlas_products, continuidad_md, branding, layers_cfg))
